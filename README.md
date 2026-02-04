@@ -1,5 +1,5 @@
-+**Bus Routing Probability School Routing and Stop Selecting.
-Project Overview**
++**Bus Routing Probability School Routing and Stop Selecting.**
+**Project Overview**
 
 The research question that is to be answered in the project will be the solution of the School Bus Routing Problem with Stop Selection based on a probabilistic optimisation tool. It is to determine an optimal combination of bus stops, assign students to the possible bus stops as well as determine the optimum order of routes which will take minimum time in the case of uncertainty.
 
