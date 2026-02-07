@@ -1,0 +1,550 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+
+\title{Lecture 5 Scribe}
+\author{Virja Shah}
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Bayes' Theorem, Random Variables, and Probability Mass Function (PMF)}
+
+\section{Bayes' Theorem}
+
+\subsection{Weighted Average of Conditional Probabilities}
+
+\subsubsection*{Step 1: Event Decomposition (Core Idea)}
+Let $A$ and $B$ be events. We may express event $A$ as:
+\[
+A = AB \cup AB^c
+\]
+
+Reasoning (as stated in the slides):\\
+For an outcome to be in $A$, it must either:
+\begin{itemize}
+\item be in both $A$ and $B$, or
+\item be in $A$ but not in $B$.
+\end{itemize}
+
+\subsubsection*{Step 2: Mutual Exclusiveness}
+The events $AB$ and $AB^c$ are mutually exclusive (cannot occur together).
+
+\subsubsection*{Step 3: Apply Axiom 3 (Additivity for Disjoint Events)}
+By Axiom 3:
+\[
+Pr(A)=Pr(AB)+Pr(AB^c)
+\]
+
+\subsubsection*{Step 4: Convert Intersections into Conditional Probability Form}
+Using:
+\[
+Pr(AB)=Pr(A\mid B)Pr(B)
+\]
+and similarly,
+\[
+Pr(AB^c)=Pr(A\mid B^c)Pr(B^c)
+\]
+
+So:
+\[
+Pr(A)=Pr(A\mid B)Pr(B)+Pr(A\mid B^c)Pr(B^c)
+\]
+
+Since:
+\[
+Pr(B^c)=1-Pr(B)
+\]
+
+Final form:
+\[
+Pr(A)=Pr(A\mid B)Pr(B)+Pr(A\mid B^c)\big[1-Pr(B)\big]
+\]
+
+Interpretation (Exactly from slides):\\
+The probability of event $A$ is a weighted average of the conditional probabilities,
+with weights given by the probability of the event on which it is conditioned has of occurring.
+
+\subsection{Learning by Example --- Example \#3.1 (Part 1/2)}
+
+\subsubsection*{Problem Statement}
+An insurance company divides people into:
+\begin{itemize}
+\item accident prone
+\item not accident prone
+\end{itemize}
+
+Given:
+\[
+Pr(\text{accident in 1 year}\mid \text{accident prone})=0.4
+\]
+\[
+Pr(\text{accident in 1 year}\mid \text{not accident prone})=0.2
+\]
+\[
+Pr(\text{accident prone})=0.3
+\]
+
+Find: Probability a new policyholder has an accident within a year.
+
+\subsubsection*{Step-by-step Solution (Exactly as in slides)}
+Let:
+\begin{itemize}
+\item $A_1$ = event that policyholder has an accident within a year
+\item $A$ = event that policyholder is accident prone
+\end{itemize}
+
+Then:
+\[
+Pr(A_1)=Pr(A_1\mid A)Pr(A)+Pr(A_1\mid A^c)Pr(A^c)
+\]
+
+Substitute values:
+\[
+Pr(A_1)=(0.4)(0.3)+(0.2)(0.7)
+\]
+\[
+Pr(A_1)=0.12+0.14=0.26
+\]
+
+Final Answer:
+\[
+Pr(A_1)=0.26
+\]
+
+\subsection{Bayes Formula --- Example \#3.1 (Part 2/2)}
+
+\subsubsection*{Problem Statement (Twist)}
+Suppose the new policyholder has an accident within a year. Find:
+\[
+Pr(A\mid A_1)
+\]
+
+\subsubsection*{Step-by-step Solution (Exactly as in slides)}
+\[
+Pr(A\mid A_1)=\frac{Pr(AA_1)}{Pr(A_1)}
+\]
+
+Now:
+\[
+Pr(AA_1)=Pr(A)Pr(A_1\mid A)
+\]
+
+So:
+\[
+Pr(A\mid A_1)=\frac{Pr(A)Pr(A_1\mid A)}{Pr(A_1)}
+\]
+
+Substitute values:
+\[
+Pr(A\mid A_1)=\frac{(0.3)(0.4)}{0.26}
+=\frac{0.12}{0.26}
+=\frac{6}{13}
+\]
+
+Final Answer:
+\[
+Pr(A\mid A_1)=\frac{6}{13}
+\]
+
+\subsection{Law of Total Probability (Formula 3.4)}
+
+\subsubsection*{Assumptions (Must be explicitly stated)}
+Suppose $B_1,B_2,\dots,B_n$ are mutually exclusive events.
+
+Their union forms the whole event space $B$:
+\[
+\bigcup_{i=1}^{n}B_i=B
+\]
+
+Meaning: Exactly one of the events $B_1,B_2,\dots,B_n$ must occur.
+
+\subsubsection*{Derivation (As shown in slides)}
+Write:
+\[
+A=\bigcup_{i=1}^{n}AB_i
+\]
+
+Since the events $AB_i$ are mutually exclusive:
+\[
+Pr(A)=\sum_{i=1}^{n}Pr(AB_i)
+\]
+
+Convert using conditional probability:
+\[
+Pr(AB_i)=Pr(A\mid B_i)Pr(B_i)
+\]
+
+Thus:
+\[
+Pr(A)=\sum_{i=1}^{n}Pr(A\mid B_i)Pr(B_i)
+\]
+
+This is the Law of Total Probability (Formula 3.4).
+
+\subsection{Bayes Formula (Proposition 3.1)}
+
+\subsubsection*{Key Identity Used}
+The slides state:
+\[
+Pr(AB_i)=Pr(B_i\mid A)Pr(A)
+\]
+
+\subsubsection*{Bayes Formula (Final Result from slides)}
+\[
+Pr(B_i\mid A)=
+\frac{Pr(A\mid B_i)Pr(B_i)}
+{\sum_{j=1}^{n}Pr(A\mid B_j)Pr(B_j)}
+\]
+
+This is known as the Bayes Formula (Proposition 3.1).
+
+\subsubsection*{Definitions (Explicit from slides)}
+\[
+Pr(B_i) = \text{apriori probability}
+\]
+probabilities that are formed from self-evident or presupposed models.
+
+\[
+Pr(B_i\mid A) = \text{posteriori probability}
+\]
+probabilities that are derived or calculated after observing certain events of event $B_i$ given $A$.
+
+\subsection{Learning by Example --- Example \#3.2 (Cards)}
+
+\subsubsection*{Problem Statement}
+There are 3 cards:
+\begin{enumerate}
+\item RR (both sides red)
+\item BB (both sides black)
+\item RB (one side red, one side black)
+\end{enumerate}
+
+Cards are mixed, one card selected and placed down.\\
+If the upper side is red, find probability that the other side is black.
+
+\subsubsection*{Step-by-step Solution (Bayes Method from slides)}
+Let:
+\begin{itemize}
+\item $RR,BB,RB$ denote events that chosen card is those types
+\item $R$ = event that the upturned side is red
+\end{itemize}
+
+We want:
+\[
+Pr(RB\mid R)
+\]
+
+Bayes setup:
+\[
+Pr(RB\mid R)=\frac{Pr(RB\cap R)}{Pr(R)}
+\]
+
+Convert numerator:
+\[
+Pr(RB\cap R)=Pr(R\mid RB)Pr(RB)
+\]
+
+Denominator expands using total probability:
+\[
+Pr(R)=Pr(R\mid RR)Pr(RR)+Pr(R\mid RB)Pr(RB)+Pr(R\mid BB)Pr(BB)
+\]
+
+So:
+\[
+Pr(RB\mid R)=
+\frac{Pr(R\mid RB)Pr(RB)}
+{Pr(R\mid RR)Pr(RR)+Pr(R\mid RB)Pr(RB)+Pr(R\mid BB)Pr(BB)}
+\]
+
+Substitute values:
+\[
+Pr(RB)=Pr(RR)=Pr(BB)=\frac{1}{3}
+\]
+\[
+Pr(R\mid RR)=1,\quad Pr(R\mid RB)=\frac{1}{2},\quad Pr(R\mid BB)=0
+\]
+
+Thus:
+\[
+Pr(RB\mid R)=
+\frac{(1/2)(1/3)}
+{(1)(1/3)+(1/2)(1/3)+(0)(1/3)}
+\]
+
+Compute:
+\[
+\text{Numerator}=\frac{1}{6}
+\]
+\[
+\text{Denominator}=\frac{1}{3}+\frac{1}{6}+0=\frac{1}{2}
+\]
+
+Thus:
+\[
+Pr(RB\mid R)=\frac{1/6}{1/2}=\frac{1}{3}
+\]
+
+Final Answer:
+\[
+Pr(RB\mid R)=\frac{1}{3}
+\]
+
+\subsubsection*{Slide Explanation of Common Mistake}
+Many guess $\frac{1}{2}$ incorrectly by assuming two equally likely cases (RR or RB).
+
+The slides explain the correct reasoning by listing 6 equally likely sides:
+\[
+R_1,R_2,B_1,B_2,R_3,B_3
+\]
+
+Given a red side, only outcomes are:
+\[
+R_1,R_2,R_3
+\]
+
+Only $R_3$ corresponds to RB card having black on the other side.\\
+So probability $=\frac{1}{3}$.
+
+\section{Random Variables}
+
+\subsection{Motivation and Concept}
+
+Key Motivation (From slides):\\
+When an experiment is performed, we are frequently interested mainly in some function of the outcome rather than the actual outcome itself.
+
+Examples from slides:
+\begin{itemize}
+\item Dice tossing: focus on sum of dice rather than individual values.
+\item Coin flipping: interest may lie in total number of heads rather than exact sequence.
+\end{itemize}
+
+\subsection{Definition (From slide)}
+These real-valued functions defined on the sample space are called Random Variables.
+
+Properties (explicit from slide):
+\begin{itemize}
+\item Values are determined by outcomes of an experiment.
+\item Probabilities are assigned to possible values of Random Variables.
+\end{itemize}
+
+\subsection{Formal Definition (From slide)}
+A random variable $X$ on a sample space $\Omega$ is a function:
+\[
+X:\Omega\to \mathbb{R}
+\]
+
+It assigns to each sample point $\omega\in\Omega$ a real number:
+\[
+X(\omega)
+\]
+
+\subsection{Discrete Restriction (Assumption stated in slides)}
+Until further notice, attention is restricted to discrete random variables, meaning:
+\begin{itemize}
+\item values are in a range that is finite or countably infinite
+\item even though $X$ maps into $\mathbb{R}$, the set of values $X$ takes is a discrete subset of $\mathbb{R}$.
+\end{itemize}
+
+\section{Distribution of a Random Variable}
+
+Probability space defines:
+\begin{itemize}
+\item sample space $\Omega$
+\item probability of each sample point
+\end{itemize}
+
+Analogously, random variable defines:
+\begin{itemize}
+\item set of values it can take
+\item probabilities with which it takes those values
+\end{itemize}
+
+\subsection{Event Form}
+Let $a$ be a number in the range of $X$. Then:
+\[
+\{\omega\in\Omega:X(\omega)=a\}
+\]
+
+This is an event in the sample space.
+
+Abbreviated as:
+\[
+X=a
+\]
+
+Then:
+\[
+Pr[X=a]
+\]
+
+The collection of these probabilities for all values of $a$ is called the distribution of $X$.
+
+\subsection{Visualization (Bar Diagram)}
+The distribution can be visualized as a bar diagram:
+\begin{itemize}
+\item x-axis: values random variable can take
+\item bar height at value $a$: $Pr[X=a]$
+\item each probability computed by probability of corresponding event in sample space
+\end{itemize}
+
+\subsection{Random Variable Example (Example-1)}
+
+Experiment: toss 3 fair coins.\\
+Let $Y$ = number of heads.
+
+Possible values:
+\[
+Y\in\{0,1,2,3\}
+\]
+
+Step-by-step Probabilities (From slides):
+\[
+P\{Y=0\}=P\{(t,t,t)\}=\frac{1}{8}
+\]
+\[
+P\{Y=1\}=P\{(t,t,h),(t,h,t),(h,t,t)\}=\frac{3}{8}
+\]
+\[
+P\{Y=2\}=P\{(t,h,h),(h,t,h),(h,h,t)\}=\frac{3}{8}
+\]
+\[
+P\{Y=3\}=P\{(h,h,h)\}=\frac{1}{8}
+\]
+
+\subsection{Total Probability Check (From slides)}
+Since $Y$ must take one of the values 0 through 3:
+\[
+1=P\left(\bigcup_{i=0}^{3}\{Y=i\}\right)
+=\sum_{i=0}^{3}P(Y=i)
+\]
+
+\section{Probability Mass Function (PMF)}
+
+\subsection{Discrete Random Variable Definition}
+A random variable that can take on at most a countable number of possible values is said to be discrete.
+
+\subsection{PMF Definition (Formal)}
+Let $X$ be a discrete random variable with range:
+\[
+R_X=x_1,x_2,x_3,\dots
+\]
+
+The function:
+\[
+p(x_k)=Pr(X=x_k)
+\]
+is called the Probability Mass Function (PMF) of $X$.
+
+\subsection{PMF Property (Normalization)}
+Since $X$ must take on one of the values $x_k$, we have:
+\[
+\sum_k p(x_k)=1
+\]
+
+\subsection{PMF Example (Given in slides)}
+
+A random variable $X$ has PMF:
+\[
+p(i)=c\frac{\lambda^i}{i!},\quad i=0,1,2,\dots
+\]
+where $\lambda$ is positive.
+
+Find:
+\[
+P\{X=0\},\quad P\{X>2\}
+\]
+
+\subsection{Step 1: Use the PMF Normalization Condition}
+Since:
+\[
+\sum_{i=0}^{\infty}p(i)=1
+\]
+
+Substitute:
+\[
+c\sum_{i=0}^{\infty}\frac{\lambda^i}{i!}=1
+\]
+
+\subsection{Step 2: Use Series Identity from slide}
+The slide states:
+\[
+e^\lambda=\sum_{i=0}^{\infty}\frac{\lambda^i}{i!}
+\]
+
+So:
+\[
+ce^\lambda=1
+\]
+
+Thus:
+\[
+c=e^{-\lambda}
+\]
+
+\subsection{Step 3: Compute $P\{X=0\}$}
+\[
+P\{X=0\}=p(0)=c\frac{\lambda^0}{0!}
+\]
+
+Substitute:
+\[
+c=e^{-\lambda},\quad \lambda^0=1,\quad 0!=1
+\]
+
+Final Answer:
+\[
+P\{X=0\}=e^{-\lambda}
+\]
+
+\subsection{Step 4: Compute $P\{X>2\}$}
+
+Slides use complement:
+\[
+P\{X>2\}=1-P\{X\le 2\}
+\]
+
+Then:
+\[
+P\{X>2\}=1-P\{X=0\}-P\{X=1\}-P\{X=2\}
+\]
+
+\section*{Final Exam Revision Checklist (From Lecture 5)}
+
+Bayes \& Total Probability:
+\[
+A=AB\cup AB^c
+\]
+\[
+Pr(A)=Pr(A\mid B)Pr(B)+Pr(A\mid B^c)\big[1-Pr(B)\big]
+\]
+\[
+Pr(A)=\sum_{i=1}^{n}Pr(A\mid B_i)Pr(B_i)
+\]
+\[
+Pr(B_i\mid A)=
+\frac{Pr(A\mid B_i)Pr(B_i)}
+{\sum_{j=1}^{n}Pr(A\mid B_j)Pr(B_j)}
+\]
+
+Random Variables:
+\[
+X:\Omega\to \mathbb{R}
+\]
+Distribution:
+\[
+Pr[X=a]
+\]
+
+PMF:
+\[
+p(x_k)=Pr(X=x_k)
+\]
+\[
+\sum_k p(x_k)=1
+\]
+
+\end{document}
