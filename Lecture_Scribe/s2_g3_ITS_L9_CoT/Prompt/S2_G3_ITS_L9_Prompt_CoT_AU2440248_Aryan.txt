@@ -1,0 +1,9 @@
+Generate a lecture scribe note that covers every thing from the pdf file attached with this prompt. The file is of a lecture in the course CSE400: Fundamentals of Probability in Computing. Make the scribe perfectly adhered to the material provided. DO NOT uses resources outside of the provided material. 
+Things that you should do by using the material (PDF attached):
+1. Make the notes of every definitions, notations; explain every topic with perfect examples
+2. If you do take examples, make sure they are from the PDF, do not use your own intuitions or examples.
+3. Do not add any new information, do not add any new logic or your intuitions, proofs, interpretations or derivations. 
+4. Do not make assumptions from outside the material provided.
+These scribes need to act as a reference reading material at the time of exams. So make sure the generated notes are exam oriented and precise. 
+Also please make sure that the scribe maintains a formal academic tone throughout makin it suitable for exam revision. 
+Remember once again to NOT add any new new material. And follow the lecture slide order exactly as given in the sequential order.
