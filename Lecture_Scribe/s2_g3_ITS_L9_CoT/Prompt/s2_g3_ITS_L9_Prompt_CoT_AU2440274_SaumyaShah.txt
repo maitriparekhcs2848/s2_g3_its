@@ -1,0 +1,19 @@
+generate a lecture scribe intended to serve as exam reference material for students. The scribe must faithfully reconstruct the content of the provided lecture slides and relevant textbook material only.
+
+While writing the scribe, reason step by step through all definitions, assumptions, theorem statements, proofs, derivations, and worked examples exactly as presented in the provided context. The logical flow between statements and steps must be made explicit so that a student can follow the reasoning during revision.
+
+Include:
+
+Definitions and notation
+
+Assumptions and conditions
+
+Statements of theorems or results
+
+Step-by-step proofs or derivations when present in the lecture
+
+Step-by-step worked examples only if they appear in the provided material
+
+Do not introduce new explanations, intuition, examples, alternative methods, or results that are not present in the lecture or textbook context. Maintain a formal academic tone suitable for exam preparation.
+
+The structure of the scribe should follow the organization and scope of the lecture.
