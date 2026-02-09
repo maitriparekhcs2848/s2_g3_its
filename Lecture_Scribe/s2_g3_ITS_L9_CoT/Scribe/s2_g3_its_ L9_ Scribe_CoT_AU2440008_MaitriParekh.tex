@@ -1,0 +1,261 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\setstretch{1.2}
+
+\title{CSE400 – Fundamentals of Probability in Computing}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Lecture 9: Uniform and Exponential Random Variables}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{1. Types of Continuous Random Variables (Overview)}
+
+The lecture introduces the following continuous random variables:
+
+\begin{itemize}
+\item Uniform Random Variable
+\item Exponential Random Variable
+\item Laplace Random Variable (listed but not developed in shown portion)
+\item Gamma Random Variable (listed but not developed in shown portion)
+\end{itemize}
+
+The focus in this material is on:
+
+\begin{itemize}
+\item Uniform Random Variable
+\item Exponential Random Variable
+\end{itemize}
+
+\section*{2. Uniform Random Variable}
+
+Let \( X \) be a continuous random variable uniformly distributed over the interval \( [a, b] \).
+
+\subsection*{2.1 Probability Density Function (PDF)}
+
+\[
+f_X(x) =
+\begin{cases}
+\dfrac{1}{b-a}, & a \le x < b \\
+0, & \text{elsewhere}
+\end{cases}
+\]
+
+This means:
+
+\begin{itemize}
+\item The density is constant between \( a \) and \( b \)
+\item Zero outside the interval
+\end{itemize}
+
+\subsection*{2.2 Cumulative Distribution Function (CDF)}
+
+\[
+F_X(x) =
+\begin{cases}
+0, & x < a \\
+\dfrac{x-a}{b-a}, & a \le x < b \\
+1, & x \ge b
+\end{cases}
+\]
+
+Thus:
+
+\begin{itemize}
+\item Before \( a \), probability is zero
+\item Between \( a \) and \( b \), probability increases linearly
+\item After \( b \), probability equals one
+\end{itemize}
+
+\subsection*{2.3 General Probability for Uniform RV on \( [0, 2\pi] \)}
+
+For a uniform random variable \( \Theta \in [0,2\pi] \):
+
+\[
+\Pr(a < \Theta < b) = \frac{b-a}{2\pi}
+\]
+
+\section*{3. Example 1 — Uniform Random Variable}
+
+\subsection*{Given:}
+
+The phase \( \Theta \) of a sinusoid is uniformly distributed over \( [0,2\pi] \):
+
+\[
+f_\Theta(\theta) =
+\begin{cases}
+\dfrac{1}{2\pi}, & 0 \le \theta < 2\pi \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\subsection*{(a) Find \( \Pr(\Theta > \frac{3\pi}{4}) \)}
+
+Using uniform probability:
+
+\[
+\Pr(\Theta > \frac{3\pi}{4})
+= \frac{2\pi - \frac{3\pi}{4}}{2\pi}
+\]
+
+\[
+= \frac{8\pi - 3\pi}{8\pi}
+= \frac{5\pi}{8\pi}
+= \frac{5}{8}
+\]
+
+\subsection*{(b) Find \( \Pr(\Theta < \pi \mid \Theta > \frac{3\pi}{4}) \)}
+
+Use conditional probability:
+
+\[
+\Pr(A|B) = \frac{\Pr(A \cap B)}{\Pr(B)}
+\]
+
+Here:
+
+\begin{itemize}
+\item \( B = \Theta > \frac{3\pi}{4} \)
+\item \( A = \Theta < \pi \)
+\end{itemize}
+
+First compute:
+
+\[
+\Pr\left(\frac{3\pi}{4} < \Theta < \pi\right)
+= \frac{\pi - \frac{3\pi}{4}}{2\pi}
+= \frac{\pi/4}{2\pi}
+= \frac{1}{8}
+\]
+
+From part (a):
+
+\[
+\Pr(B) = \frac{5}{8}
+\]
+
+Therefore:
+
+\[
+\Pr(\Theta < \pi \mid \Theta > \frac{3\pi}{4})
+= \frac{1/8}{5/8}
+= \frac{1}{5}
+\]
+
+\subsection*{(c) Find \( \Pr(\cos\Theta < \frac{1}{2}) \)}
+
+Solve:
+
+\[
+\cos\Theta = \frac{1}{2}
+\Rightarrow \Theta = \frac{\pi}{3}, \frac{5\pi}{3}
+\]
+
+Thus:
+
+\[
+\cos\Theta < \frac{1}{2}
+\quad \text{for} \quad \frac{\pi}{3} < \Theta < \frac{5\pi}{3}
+\]
+
+Probability:
+
+\[
+\Pr = \frac{\frac{5\pi}{3} - \frac{\pi}{3}}{2\pi}
+= \frac{4\pi/3}{2\pi}
+= \frac{2}{3}
+\]
+
+\section*{4. Applications of Uniform Random Variable}
+
+Examples stated:
+
+\begin{itemize}
+\item Phase of a sinusoidal signal uniformly between \( 0 \) and \( 2\pi \)
+\item Random number between 0 and 1 in simulations
+\item Arrival time within a known time window assuming no preference
+\end{itemize}
+
+\section*{5. Exponential Random Variable}
+
+Let \( b > 0 \).
+
+\subsection*{5.1 Probability Density Function (PDF)}
+
+\[
+f_X(x) = \frac{1}{b} \exp\left(-\frac{x}{b}\right) u(x)
+\]
+
+where \( u(x) \) is the unit step function ensuring:
+
+\[
+x \ge 0
+\]
+
+\subsection*{5.2 Cumulative Distribution Function (CDF)}
+
+\[
+F_X(x) = \left[1 - \exp\left(-\frac{x}{b}\right)\right] u(x)
+\]
+
+Thus:
+
+\begin{itemize}
+\item Probability starts at zero
+\item Increases exponentially toward 1 as \( x \to \infty \)
+\end{itemize}
+
+\section*{6. Example 2 — Exponential Random Variable}
+
+\subsection*{Given:}
+
+\[
+f_X(x) = e^{-x} u(x)
+\]
+
+This corresponds to exponential RV with \( b = 1 \).
+
+\subsection*{(a) Find \( \Pr(3X < 5) \)}
+
+First rewrite inequality:
+
+\[
+3X < 5 \Rightarrow X < \frac{5}{3}
+\]
+
+Now use CDF:
+
+\[
+\Pr(X < y) = 1 - e^{-y}
+\]
+
+So:
+
+\[
+\Pr(3X < 5) = 1 - e^{-5/3}
+\]
+
+\subsection*{(b) Generalize: Find \( \Pr(3X < y) \)}
+
+Rewrite:
+
+\[
+3X < y \Rightarrow X < \frac{y}{3}
+\]
+
+Thus:
+
+\[
+\Pr(3X < y) = 1 - e^{-y/3}
+\]
+
+\end{document}
