@@ -1,0 +1,304 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\begin{document}
+\onehalfspacing
+
+\begin{center}
+\textbf{CSE400 – Fundamentals of Probability in Computing} \\
+\textbf{Lecture 9 Scribe} \\
+\textbf{Uniform, Exponential, Laplace and Gamma Random Variables} \\
+Instructor: Dhaval Patel, PhD \\
+Date: February 2, 2026
+\end{center}
+
+\section{Introduction and Lecture Scope}
+This lecture introduces types of continuous random variables and discusses their mathematical formulation, properties, and applications. The lecture specifically covers:
+
+\begin{itemize}
+\item Uniform Random Variable
+\item Exponential Random Variable
+\item Laplace Random Variable
+\item Gamma Random Variable
+\item Graphical and example-based understanding
+\item Problem solving and Gaussian density estimation discussion
+\end{itemize}
+
+The material establishes the mathematical definitions of distributions using Probability Density Function (PDF) and Cumulative Distribution Function (CDF). L9\_S2\_A
+
+\section{Types of Continuous Random Variables}
+Continuous random variables are defined using probability density functions instead of probability mass functions. The lecture focuses on commonly used continuous distributions used in computing and modelling scenarios. L9\_S2\_A
+
+\section{Uniform Random Variable}
+
+\subsection{Definition}
+A random variable $X$ is called a Uniform Random Variable over the interval $[a,b]$ if the probability density function is constant over this interval and zero elsewhere.
+
+\subsection{Probability Density Function (PDF)}
+The PDF of a uniform random variable is given by:
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{b-a}, & a \leq x < b \\
+0, & \text{elsewhere}
+\end{cases}
+\]
+
+\textbf{Explanation}
+
+The probability is evenly distributed across the interval $[a,b]$.
+
+Since probability density must integrate to 1:
+\[
+\int_a^b f_X(x)\,dx = 1
+\]
+
+Because the density is constant over the interval:
+\[
+f_X(x) = \frac{1}{b-a}
+\]
+
+\subsection{Cumulative Distribution Function (CDF)}
+The CDF is obtained by integrating the PDF.
+\[
+F_X(x) =
+\begin{cases}
+0, & x < a \\
+\frac{x-a}{b-a}, & a \leq x < b \\
+1, & x \geq b
+\end{cases}
+\]
+
+\subsection{Step-by-Step Derivation of CDF}
+
+\textbf{Case 1:} $x < a$
+
+Since the distribution starts at $a$,
+\[
+F_X(x) = 0
+\]
+
+\textbf{Case 2:} $a \leq x < b$
+
+\[
+F_X(x) = \int_a^x \frac{1}{b-a} \, dt
+\]
+
+Evaluating integral:
+\[
+F_X(x) = \frac{x-a}{b-a}
+\]
+
+\textbf{Case 3:} $x \geq b$
+
+Entire probability mass is accumulated:
+\[
+F_X(x) = 1
+\]
+
+\subsection{Observations from Lecture Discussion}
+The lecture emphasizes:
+
+\begin{itemize}
+\item Uniform distribution is often treated as a reference distribution.
+\item It is used in modelling and simulation.
+\item It forms a base distribution in many algorithms.
+\end{itemize}
+
+\section{Exponential Random Variable}
+
+\subsection{Definition}
+An exponential random variable models time-related processes such as waiting time and decay-based behaviour.
+
+\subsection{Probability Density Function}
+For parameter $b > 0$, the PDF is defined as:
+\[
+f_X(x) = \frac{1}{b} \exp\left(-\frac{x}{b}\right) u(x)
+\]
+
+Where:
+
+\begin{itemize}
+\item $u(x)$ is the unit step function
+\item $u(x) = 0$ for $x < 0$
+\item $u(x) = 1$ for $x \geq 0$
+\end{itemize}
+
+\textbf{Interpretation of Unit Step Function}
+
+The unit step function restricts the domain of the exponential random variable such that:
+\[
+X \geq 0
+\]
+
+This means the distribution exists only for non-negative values.
+
+\subsection{Cumulative Distribution Function}
+The CDF is given by:
+\[
+F_X(x) = \left(1 - \exp\left(-\frac{x}{b}\right)\right) u(x)
+\]
+
+\subsection{Step-by-Step Derivation of CDF}
+
+The CDF is computed using integration of PDF.
+
+\textbf{Step 1: Start with definition}
+\[
+F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt
+\]
+
+\textbf{Step 2: Apply support restriction}
+
+Since exponential RV exists only for $t \geq 0$:
+\[
+F_X(x) =
+\begin{cases}
+0, & x < 0 \\
+\int_0^x \frac{1}{b} e^{-t/b} \, dt, & x \geq 0
+\end{cases}
+\]
+
+\textbf{Step 3: Solve integral}
+
+\[
+\int_0^x \frac{1}{b} e^{-t/b} \, dt
+\]
+
+Let:
+\[
+I = \int e^{-t/b} \, dt
+\]
+
+\[
+I = -b e^{-t/b}
+\]
+
+Applying limits:
+\[
+F_X(x) = \left[-e^{-t/b}\right]_0^x
+\]
+
+\[
+F_X(x) = 1 - e^{-x/b}
+\]
+
+\textbf{Step 4: Include unit step function}
+
+\[
+F_X(x) = (1 - e^{-x/b})u(x)
+\]
+
+\subsection{Graphical Behaviour}
+
+\textbf{PDF Characteristics}
+
+\begin{itemize}
+\item Maximum value occurs at $x = 0$
+\item PDF decreases exponentially as $x$ increases
+\item Distribution is skewed to the right
+\end{itemize}
+
+\textbf{CDF Characteristics}
+
+\begin{itemize}
+\item Starts at zero
+\item Monotonically increases
+\item Approaches 1 asymptotically
+\end{itemize}
+
+\section{Example – Exponential Random Variable}
+
+\textbf{Problem Statement}
+
+Let $X$ be an exponential random variable with PDF:
+\[
+f_X(x) = e^{-x}u(x)
+\]
+
+\textbf{Step 1: Identify Distribution Support}
+
+From unit step function:
+\[
+X \geq 0
+\]
+
+\textbf{Step 2: Interpret Expression}
+
+The presence of $u(x)$ ensures:
+
+\begin{itemize}
+\item The PDF is zero for negative values.
+\item The exponential decay starts from $x = 0$.
+\end{itemize}
+
+\textbf{Step 3: Observed Domain Representation}
+
+The lecture explains the domain as:
+\[
+X \in (-\infty, \infty)
+\]
+
+However, due to $u(x)$, the effective domain becomes:
+\[
+X \in [0, \infty)
+\]
+
+\section{Laplace Random Variable}
+The lecture lists the Laplace random variable as part of the covered distributions. The discussion includes:
+
+\begin{itemize}
+\item Example explanation
+\item Distribution usage in modelling
+\item Graph-based understanding
+\end{itemize}
+
+\section{Gamma Random Variable}
+The lecture introduces Gamma random variables and includes:
+
+\begin{itemize}
+\item Graph and special case analysis
+\item Example explanation
+\item Homework problem related to Gamma distribution
+\end{itemize}
+
+\section{Applications and Contextual Discussion}
+The lecture links continuous random variables with:
+
+\begin{itemize}
+\item Randomised algorithms
+\item Modelling processes
+\item Coding and inference mechanisms
+\item Data modelling and estimation
+\item Gaussian density estimation (in-class activity)
+\end{itemize}
+
+\section{Key Learning Observations}
+
+\begin{itemize}
+\item Continuous distributions are defined using PDF and CDF.
+\item Uniform distribution models equal likelihood across intervals.
+\item Exponential distribution models decay and waiting-time processes.
+\item Unit step functions are used to restrict distribution domains.
+\item Graphical interpretation helps understand behaviour of distributions.
+\item These distributions are widely used in computing, modelling, and algorithmic design.
+\end{itemize}
+
+\section{Summary}
+This lecture develops foundational understanding of major continuous random variable distributions. The lecture systematically derives:
+
+\begin{itemize}
+\item Mathematical definitions
+\item PDF formulations
+\item CDF derivations
+\item Graphical interpretations
+\item Application contexts
+\end{itemize}
+
+The material forms a basis for probabilistic modelling and statistical analysis in computing systems. L9\_S2\_A
+
+\end{document}
