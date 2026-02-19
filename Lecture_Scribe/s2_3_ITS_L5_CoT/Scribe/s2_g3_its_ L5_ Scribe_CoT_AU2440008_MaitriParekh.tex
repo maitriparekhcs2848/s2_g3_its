@@ -1,0 +1,363 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\title{Lecture 5: Bayes’ Theorem, Random Variables, and Probability Mass Function}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Bayes’ Theorem}
+
+\subsection{Weighted Average of Conditional Probabilities}
+
+Let \textbf{A} and \textbf{B} be events.
+
+Any event \textbf{A} can be expressed as:
+\[
+A = AB \cup AB^c
+\]
+
+This follows because for an outcome to belong to \textbf{A}, it must either:
+
+\begin{itemize}
+\item Occur in both \textbf{A and B}, or
+\item Occur in \textbf{A but not in B}
+\end{itemize}
+
+Since \textbf{AB} and \textbf{AB}$^{c}$ are mutually exclusive, by Axiom 3 of probability:
+\[
+Pr(A) = Pr(AB) + Pr(AB^c)
+\]
+
+Using conditional probability:
+\[
+Pr(A) = Pr(A|B)Pr(B) + Pr(A|B^c)[1 - Pr(B)]
+\]
+
+\subsubsection*{Interpretation:}
+
+\begin{quote}
+The probability of event \textbf{A} is a \textbf{weighted average} of conditional probabilities, where the weights are the probabilities of the conditioning events.
+\end{quote}
+
+\subsection{Learning by Example — Insurance Problem}
+
+\subsubsection*{Example 3.1 (Part 1)}
+
+An insurance company classifies people into:
+
+\begin{itemize}
+\item Accident-prone
+\item Not accident-prone
+\end{itemize}
+
+Given:
+\[
+Pr(\text{Accident | accident-prone}) = 0.4
+\]
+\[
+Pr(\text{Accident | not accident-prone}) = 0.2
+\]
+\[
+Pr(\text{Accident-prone}) = 0.3
+\]
+
+Let:
+\begin{itemize}
+\item $(A_1)$ = policyholder has an accident within a year
+\item $(A)$ = policyholder is accident-prone
+\end{itemize}
+
+Apply weighted average:
+\[
+Pr(A_1) = Pr(A_1|A)Pr(A) + Pr(A_1|A^c)Pr(A^c)
+\]
+\[
+= (0.4)(0.3) + (0.2)(0.7)
+\]
+\[
+= 0.12 + 0.14 = 0.26
+\]
+
+\textbf{Probability of accident = 0.26}
+
+\subsubsection*{Example 3.1 (Part 2)}
+
+Given that the policyholder \textbf{had an accident}, find the probability they are accident-prone:
+\[
+Pr(A|A_1)
+\]
+
+Using Bayes’ formula:
+\[
+Pr(A|A_1) = \frac{Pr(A)Pr(A_1|A)}{Pr(A_1)}
+\]
+\[
+= \frac{(0.3)(0.4)}{0.26} = \frac{6}{13}
+\]
+
+\subsection{Law of Total Probability}
+
+Let:
+\[
+B_1, B_2, ..., B_n
+\]
+
+be \textbf{mutually exclusive events} such that:
+\[
+\bigcup_{i=1}^n B_i = B
+\]
+
+Since:
+\[
+A = \bigcup_{i=1}^n AB_i
+\]
+
+and the events $(AB_i)$ are mutually exclusive:
+\[
+Pr(A) = \sum_{i=1}^n Pr(AB_i)
+\]
+
+Using conditional probability:
+\[
+Pr(A) = \sum_{i=1}^n Pr(A|B_i)Pr(B_i)
+\]
+
+This is called the \textbf{Law of Total Probability (Formula 3.4)}
+
+\subsection{Bayes’ Formula (Proposition 3.1)}
+
+Using:
+\[
+Pr(AB_i) = Pr(B_i|A)Pr(A)
+\]
+
+we obtain:
+\[
+Pr(B_i|A) = \frac{Pr(A|B_i)Pr(B_i)}{\sum_{j=1}^n Pr(A|B_j)Pr(B_j)}
+\]
+
+\subsubsection*{Terminology:}
+
+\begin{itemize}
+\item $Pr(B_i)$ $\rightarrow$ \textit{a priori probability}
+\item $Pr(B_i | A)$ $\rightarrow$ \textit{posterior probability}
+\end{itemize}
+
+\subsection{Bayes Example — Colored Cards}
+
+Three cards:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Card & Sides \\
+\midrule
+1 & Red – Red \\
+2 & Black – Black \\
+3 & Red – Black \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+One card selected randomly.
+
+Let:
+\begin{itemize}
+\item RR = all red card
+\item BB = all black card
+\item RB = mixed card
+\item R = upper side is red
+\end{itemize}
+
+We seek:
+\[
+Pr(RB | R)
+\]
+
+Using Bayes:
+\[
+Pr(RB|R)=\frac{Pr(R|RB)Pr(RB)}{Pr(R|RR)Pr(RR)+Pr(R|RB)Pr(RB)+Pr(R|BB)Pr(BB)}
+\]
+
+Substitute:
+\[
+=\frac{(1/2)(1/3)}{(1)(1/3)+(1/2)(1/3)+(0)(1/3)}
+\]
+\[
+=\frac{1/6}{1/3+1/6}=\frac{1}{3}
+\]
+
+\textbf{Correct probability = 1/3}
+
+Common mistake: assuming two cases are equally likely (which they are not).
+
+\section{Random Variables}
+
+\subsection{Motivation}
+
+Often we are interested not in outcomes themselves but in a \textbf{numerical function of outcomes}.
+
+Examples:
+\begin{itemize}
+\item Sum of dice rather than each die
+\item Number of heads rather than full coin sequence
+\end{itemize}
+
+\subsection{Definition}
+
+A \textbf{random variable} is a real-valued function defined on the sample space:
+\[
+X: \Omega \rightarrow \mathbb{R}
+\]
+
+which assigns a real number to each sample point.
+
+The lecture restricts attention to \textbf{discrete random variables}:
+
+\begin{itemize}
+\item Values are finite or countably infinite
+\item Actual values form a discrete subset of $\mathbb{R}$
+\end{itemize}
+
+\subsection{Distribution of a Random Variable}
+
+Two components:
+
+\begin{enumerate}
+\item Values the variable can take
+\item Probabilities of those values
+\end{enumerate}
+
+For any value $(a)$:
+\[
+\{ \omega \in \Omega : X(\omega)=a \}
+\]
+
+is an event, abbreviated as:
+\[
+X = a
+\]
+
+The collection:
+\[
+Pr(X=a)
+\]
+
+for all values of $(a)$ is called the \textbf{distribution of X}.
+
+\subsection{Visualization}
+
+The distribution can be represented by a \textbf{bar diagram}:
+
+\begin{itemize}
+\item x-axis $\rightarrow$ possible values
+\item bar height $\rightarrow$ $(Pr[X=a])$
+\end{itemize}
+
+\subsection{Example — Three Coin Tosses}
+
+Let:
+\[
+Y = \text{number of heads}
+\]
+
+Possible values:
+\[
+0,1,2,3
+\]
+
+Probabilities:
+\[
+P(Y=0)=\frac{1}{8}
+\]
+\[
+P(Y=1)=\frac{3}{8}
+\]
+\[
+P(Y=2)=\frac{3}{8}
+\]
+\[
+P(Y=3)=\frac{1}{8}
+\]
+
+Since Y must take one of these values:
+\[
+1 = \sum_{i=0}^3 P(Y=i)
+\]
+
+\section{Probability Mass Function (PMF)}
+
+\subsection{Discrete Random Variable}
+
+A random variable that takes \textbf{at most countably many values} is called \textbf{discrete}.
+
+\subsection{Definition of PMF}
+
+Let:
+\[
+R_X = \{x_1, x_2, x_3, ...\}
+\]
+
+be the range of X.
+
+The function:
+\[
+p(x_k) = Pr(X = x_k)
+\]
+
+is called the \textbf{Probability Mass Function (PMF)}.
+
+Since X must take one of its values:
+\[
+\sum_k p(x_k) = 1
+\]
+
+\subsection{PMF Example (Poisson-type Form)}
+
+Given:
+\[
+p(i)=c\frac{\lambda^i}{i!}, \quad i=0,1,2,...
+\]
+
+First use normalization:
+\[
+\sum_{i=0}^{\infty} p(i)=1
+\]
+\[
+c \sum_{i=0}^{\infty} \frac{\lambda^i}{i!}=1
+\]
+
+Using:
+\[
+e^\lambda = \sum_{i=0}^{\infty} \frac{\lambda^i}{i!}
+\]
+
+So:
+\[
+c e^\lambda = 1 \Rightarrow c = e^{-\lambda}
+\]
+
+\subsubsection*{Find $(P(X=0))$}
+
+\[
+P(X=0)=e^{-\lambda}\frac{\lambda^0}{0!}=e^{-\lambda}
+\]
+
+\subsubsection*{Find $(P(X>2))$}
+
+\[
+P(X>2)=1-P(X\le2)
+\]
+\[
+=1-[P(X=0)+P(X=1)+P(X=2)]
+\]
+
+\end{document}
+
+
+\end{document}

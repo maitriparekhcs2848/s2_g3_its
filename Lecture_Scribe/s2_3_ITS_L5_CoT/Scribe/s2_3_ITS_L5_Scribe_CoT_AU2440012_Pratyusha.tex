@@ -1,0 +1,392 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{Lecture 5: Bayes’ Theorem, Random Variables, and Probability Mass Function}
+
+\hrulefill
+
+\subsection*{1. Introduction and Scope of the Lecture}
+
+This lecture covers three major topics:
+
+\begin{enumerate}
+    \item Bayes’ Theorem
+    \item Random Variables
+    \item Probability Mass Function (PMF)
+\end{enumerate}
+
+The focus is on understanding conditional probability through Bayes’ theorem, motivating the concept of random variables, and formally defining probability mass functions for discrete random variables.
+
+\hrulefill
+
+\section*{Part I: Bayes’ Theorem}
+
+\subsection*{2. Bayes’ Theorem as a Weighted Average of Conditional Probabilities}
+
+\subsubsection*{Definition and Decomposition of an Event}
+
+Let \textbf{A} and \textbf{B} be two events. Any outcome that belongs to event \textbf{A} must satisfy one of the following:
+
+\begin{itemize}
+    \item It lies in both \textbf{A} and \textbf{B} (event \textbf{AB}), or
+    \item It lies in \textbf{A} but not in \textbf{B} (event \textbf{AB}$^{c}$).
+\end{itemize}
+
+Thus, event \textbf{A} can be written as:
+
+\[
+A = AB \cup AB^{c}
+\]
+
+\subsubsection*{Mutual Exclusivity}
+
+The events \textbf{AB} and \textbf{AB}$^{c}$ are mutually exclusive because an outcome cannot simultaneously belong to \textbf{B} and \textbf{B}$^{c}$.
+
+\subsubsection*{Application of Axiom 3}
+
+By Axiom 3 of probability (additivity for mutually exclusive events):
+
+\[
+\Pr(A) = \Pr(AB) + \Pr(AB^{c})
+\]
+
+\subsubsection*{Expressing Joint Probabilities Using Conditional Probability}
+
+Using the definition of conditional probability:
+
+\[
+\Pr(AB) = \Pr(A \mid B)\Pr(B)
+\]
+
+\[
+\Pr(AB^{c}) = \Pr(A \mid B^{c})\Pr(B^{c})
+\]
+
+Since $\Pr(B^{c}) = 1 - \Pr(B)$, we obtain:
+
+\[
+\Pr(A) = \Pr(A \mid B)\Pr(B) + \Pr(A \mid B^{c})[1 - \Pr(B)]
+\]
+
+\subsubsection*{Interpretation}
+
+The probability of event \textbf{A} is a \textbf{weighted average} of the conditional probabilities $\Pr(A \mid B)$ and $\Pr(A \mid B^{c})$, where the weights are the probabilities of \textbf{B} and \textbf{B}$^{c}$, respectively.
+
+\hrulefill
+
+\subsection*{3. Learning by Example: Insurance Policy Example (Example 3.1)}
+
+\subsubsection*{Given Information}
+
+\begin{itemize}
+    \item Population divided into two classes:
+    \begin{itemize}
+        \item Accident-prone
+        \item Not accident-prone
+    \end{itemize}
+    \item Probability of accident within one year:
+    \begin{itemize}
+        \item Accident-prone: 0.4
+        \item Not accident-prone: 0.2
+    \end{itemize}
+    \item Probability that a randomly chosen person is accident-prone: 0.3
+\end{itemize}
+
+\subsubsection*{Part 1: Probability That a New Policyholder Has an Accident}
+
+Let:
+
+\begin{itemize}
+    \item $A_1$ = event that the policyholder has an accident within one year
+    \item $A$ = event that the policyholder is accident-prone
+\end{itemize}
+
+Using conditioning on whether the policyholder is accident-prone:
+
+\[
+\Pr(A_1) = \Pr(A_1 \mid A)\Pr(A) + \Pr(A_1 \mid A^{c})\Pr(A^{c})
+\]
+
+Substituting the given values:
+
+\[
+\Pr(A_1) = (0.4)(0.3) + (0.2)(0.7)
+\]
+
+\[
+\Pr(A_1) = 0.12 + 0.14 = 0.26
+\]
+
+Thus, the probability that a new policyholder has an accident within one year is \textbf{0.26}.
+
+\hrulefill
+
+\subsubsection*{Part 2: Probability That the Policyholder Is Accident-Prone Given an Accident Occurred}
+
+Now, it is given that the policyholder \textbf{did} have an accident within one year.
+
+We want to find:
+
+\[
+\Pr(A \mid A_1)
+\]
+
+Using the definition of conditional probability:
+
+\[
+\Pr(A \mid A_1) = \frac{\Pr(A \cap A_1)}{\Pr(A_1)}
+\]
+
+Using joint probability:
+
+\[
+\Pr(A \cap A_1) = \Pr(A)\Pr(A_1 \mid A) = (0.3)(0.4)
+\]
+
+Thus:
+
+\[
+\Pr(A \mid A_1) = \frac{0.3 \times 0.4}{0.26} = \frac{6}{13}
+\]
+
+\hrulefill
+
+\subsection*{4. Formal Introduction: Law of Total Probability and Bayes’ Formula}
+
+\subsubsection*{Law of Total Probability}
+
+Let $B_1, B_2, \ldots, B_n$ be mutually exclusive and exhaustive events such that one of them must occur.
+
+Then for any event $A$:
+
+\[
+\Pr(A) = \sum \Pr(A \cap B_i)
+\]
+
+Using conditional probability:
+
+\[
+\Pr(A \cap B_i) = \Pr(A \mid B_i)\Pr(B_i)
+\]
+
+Hence:
+
+\[
+\Pr(A) = \sum \Pr(A \mid B_i)\Pr(B_i)
+\]
+
+This is known as the \textbf{Law of Total Probability}.
+
+\hrulefill
+
+\subsubsection*{Bayes’ Formula (Proposition 3.1)}
+
+Starting from:
+
+\[
+\Pr(A \cap B_i) = \Pr(B_i \mid A)\Pr(A)
+\]
+
+And substituting into the Law of Total Probability, we obtain:
+
+\[
+\Pr(B_i \mid A) =
+\frac{\Pr(A \mid B_i)\Pr(B_i)}
+{\sum \Pr(A \mid B_j)\Pr(B_j)}
+\]
+
+\subsubsection*{Terminology}
+
+\begin{itemize}
+    \item \textbf{$\Pr(B_i)$}: \textit{A priori probability} (formed from prior assumptions or models)
+    \item \textbf{$\Pr(B_i \mid A)$}: \textit{A posteriori probability} (updated after observing event A)
+\end{itemize}
+
+\hrulefill
+
+\subsection*{5. Learning by Example: Card Experiment (Example 3.2)}
+
+\subsubsection*{Description of the Experiment}
+
+Three cards:
+
+\begin{itemize}
+    \item One card: Red--Red (RR)
+    \item One card: Black--Black (BB)
+    \item One card: Red--Black (RB)
+\end{itemize}
+
+One card is randomly selected and placed on the ground. The upper side is observed to be red.
+
+Question: What is the probability that the other side is black?
+
+\hrulefill
+
+\subsubsection*{Event Definitions}
+
+\begin{itemize}
+    \item RR: card is red--red
+    \item BB: card is black--black
+    \item RB: card is red--black
+    \item R: upper side is red
+\end{itemize}
+
+Each card is equally likely:
+\[
+\Pr(RR) = \Pr(BB) = \Pr(RB) = \frac{1}{3}
+\]
+
+\hrulefill
+
+\subsubsection*{Applying Bayes’ Formula}
+
+\[
+\Pr(RB \mid R) =
+\frac{\Pr(R \mid RB)\Pr(RB)}
+{\Pr(R \mid RR)\Pr(RR) + \Pr(R \mid RB)\Pr(RB) + \Pr(R \mid BB)\Pr(BB)}
+\]
+
+Substitute values:
+
+\begin{itemize}
+    \item $\Pr(R \mid RR) = 1$
+    \item $\Pr(R \mid RB) = \frac{1}{2}$
+    \item $\Pr(R \mid BB) = 0$
+\end{itemize}
+
+Thus:
+
+\[
+\Pr(RB \mid R) =
+\frac{\frac{1}{2} \times \frac{1}{3}}
+{\left(1 \times \frac{1}{3}\right) + \left(\frac{1}{2} \times \frac{1}{3}\right) + \left(0 \times \frac{1}{3}\right)}
+\]
+
+\[
+\Pr(RB \mid R) = \frac{1}{6} \div \frac{1}{2} = \frac{1}{3}
+\]
+
+\hrulefill
+
+\subsubsection*{Explanation of the Common Mistake}
+
+It is incorrect to assume that the probabilities of RR and RB are equal after observing a red side.
+
+Considering individual sides, there are six equally likely outcomes:
+$R_1, R_2, B_1, B_2, R_3, B_3$.
+
+Given a red side is observed, the possible outcomes are $R_1, R_2,$ and $R_3$.
+
+Only $R_3$ corresponds to the red--black card, so the probability is $1/3$.
+
+\hrulefill
+
+\section*{Part II: Random Variables}
+
+\subsection*{6. Motivation and Concept}
+
+In many experiments, interest lies not in the exact outcome, but in a function of the outcome.
+
+Examples:
+
+\begin{itemize}
+    \item In dice tossing, interest may lie in the \textbf{sum} of the dice.
+    \item In coin tossing, interest may lie in the \textbf{number of heads}.
+\end{itemize}
+
+A \textbf{random variable} is a real-valued function defined on the sample space.
+
+\begin{itemize}
+    \item Its value is determined by the outcome of the experiment.
+    \item Probabilities are assigned to its possible values.
+\end{itemize}
+
+The distribution of a random variable can be visualized using a bar diagram:
+
+\begin{itemize}
+    \item X-axis: values of the random variable
+    \item Height of each bar: $\Pr[X = a]$
+\end{itemize}
+
+\hrulefill
+
+\subsection*{7. Example: Tossing Three Fair Coins}
+
+Let the experiment consist of tossing three fair coins.
+
+Let $Y$ denote the number of heads observed.
+
+Possible values of $Y$: 0, 1, 2, 3
+
+Corresponding probabilities:
+
+\begin{itemize}
+    \item $\Pr(Y = 0) = \Pr(TTT) = \frac{1}{8}$
+    \item $\Pr(Y = 1) = \Pr(TTH, THT, HTT) = \frac{3}{8}$
+    \item $\Pr(Y = 2) = \Pr(THH, HTH, HHT) = \frac{3}{8}$
+    \item $\Pr(Y = 3) = \Pr(HHH) = \frac{1}{8}$
+\end{itemize}
+
+Since $Y$ must take one of these values, the sum of probabilities equals 1.
+
+\hrulefill
+
+\section*{Part III: Probability Mass Function (PMF)}
+
+\subsection*{8. Definition of a Discrete Random Variable}
+
+A random variable that can take on at most a \textbf{countable number} of possible values is called a \textbf{discrete random variable}.
+
+\hrulefill
+
+\subsection*{9. Probability Mass Function}
+
+Let $X$ be a discrete random variable with range:
+
+\[
+R_X = \{x_1, x_2, x_3, \ldots\}
+\]
+
+The function:
+
+\[
+p(x_k) = \Pr(X = x_k)
+\]
+
+is called the \textbf{Probability Mass Function (PMF)} of $X$.
+
+Since $X$ must take one of the values in its range:
+
+\[
+\sum p(x_k) = 1
+\]
+
+\hrulefill
+
+\subsection*{10. Example: PMF Definition Problem}
+
+Given the PMF:
+
+\[
+p(i) = c \frac{\lambda^i}{i!}, \quad i = 0, 1, 2, \ldots, \text{ where } \lambda > 0
+\]
+
+Using the PMF definition and the fact that probabilities sum to 1, required probabilities such as:
+
+\begin{itemize}
+    \item $\Pr(X = 0)$
+    \item $\Pr(X > 2)$
+\end{itemize}
+
+are obtained by substituting the appropriate values of $i$ into the given PMF and summing over the required range.
+
+\hrulefill
+
+\subsection*{End of Lecture 5 Scribe}
+
+\end{document}

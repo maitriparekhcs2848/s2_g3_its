@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture 5 Scribe: Bayes’ Theorem, Random Variables, and PMF}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Bayes’ Theorem -- Weighted Average of Conditional Probabilities}
+
+Let $A$ and $B$ be events. Event $A$ can be decomposed as
+\[
+A = AB \cup AB^c
+\]
+since any outcome in $A$ must either belong to both $A$ and $B$ or to $A$ but not to $B$.
+
+Because $AB$ and $AB^c$ are mutually exclusive, by Axiom 3:
+\[
+Pr(A) = Pr(AB) + Pr(AB^c)
+\]
+
+Using conditional probability:
+\[
+Pr(AB) = Pr(A|B)Pr(B), \quad
+Pr(AB^c) = Pr(A|B^c)Pr(B^c)
+\]
+
+Thus,
+\[
+Pr(A) = Pr(A|B)Pr(B) + Pr(A|B^c)[1 - Pr(B)]
+\]
+
+\textbf{Result:} $Pr(A)$ is a weighted average of conditional probabilities.
+
+\section*{2. Learning by Example -- Insurance Model}
+
+\subsection*{Example 3.1 (Part 1)}
+
+Given:
+\[
+Pr(A_1|A)=0.4, \quad Pr(A_1|A^c)=0.2, \quad Pr(A)=0.3
+\]
+
+Let $A_1$ be the event of an accident within a year and $A$ the event of being accident prone.
+
+\[
+Pr(A_1)=Pr(A_1|A)Pr(A)+Pr(A_1|A^c)Pr(A^c)
+\]
+\[
+= (0.4)(0.3) + (0.2)(0.7) = 0.26
+\]
+
+\subsection*{Example 3.1 (Part 2)}
+
+\[
+Pr(A|A_1)=\frac{Pr(A_1|A)Pr(A)}{Pr(A_1)}
+= \frac{(0.4)(0.3)}{0.26} = \frac{6}{13}
+\]
+
+\section*{3. Law of Total Probability}
+
+If $B_1, B_2, \dots, B_n$ form a partition of the sample space:
+\[
+Pr(A)=\sum_i Pr(A|B_i)Pr(B_i)
+\]
+
+\section*{4. Bayes’ Formula}
+
+Using $Pr(AB_i)=Pr(B_i|A)Pr(A)$,
+\[
+Pr(B_i|A)=\frac{Pr(A|B_i)Pr(B_i)}{\sum_j Pr(A|B_j)Pr(B_j)}
+\]
+
+Where:
+\[
+Pr(B_i) = \text{a priori probability}, \quad
+Pr(B_i|A) = \text{posterior probability}
+\]
+
+\section*{5. Example 3.2 -- Cards Problem}
+
+Cards: RR, BB, RB.
+
+Let $R$ be the event the upturned side is red.
+
+\[
+Pr(RB|R)=\frac{Pr(R|RB)Pr(RB)}{Pr(R|RR)Pr(RR)+Pr(R|RB)Pr(RB)+Pr(R|BB)Pr(BB)}
+\]
+\[
+=\frac{(1/2)(1/3)}{(1)(1/3)+(1/2)(1/3)+(0)(1/3)}=\frac{1}{3}
+\]
+
+\section*{6. Random Variables}
+
+A \textbf{random variable} is a real-valued function defined on the sample space. Probabilities are assigned to its values.
+
+\subsection*{Example: Three Coin Tosses}
+
+Let $Y$ = number of heads.
+
+\[
+P(Y=0)=\frac{1}{8}, \quad
+P(Y=1)=\frac{3}{8}, \quad
+P(Y=2)=\frac{3}{8}, \quad
+P(Y=3)=\frac{1}{8}
+\]
+\[
+\sum P(Y=y)=1
+\]
+
+\section*{7. Probability Mass Function (PMF)}
+
+A random variable with countable values is discrete.
+
+For discrete $X$ with range $R_X = \{x_1,x_2,\dots\}$:
+\[
+p(x_k)=Pr(X=x_k)
+\]
+\[
+\sum_k p(x_k)=1
+\]
+
+\subsection*{PMF Example}
+
+Given
+\[
+p(i)=c\lambda^i, \quad i=0,1,2,\dots
+\]
+\[
+\sum_{i=0}^{\infty} c\lambda^i = 1
+\]
+
+Used to compute:
+\[
+P(X=0), \quad P(X>2)
+\]
+
+\end{document}
+
