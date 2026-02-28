@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\begin{center}
+Lecture 13 \\
+Virja Shah
+\end{center}
+
+Q1. Division of 20 Dishes into 4 Platters
+
+\[
+\frac{20!}{(5!)^4 4!}
+\]
+
+\[
+P = \frac{1}{\frac{20!}{(5!)^4 4!}}
+\]
+
+Q2. Bus Waiting Time (Uniform Distribution)
+
+\[
+f(x) = \frac{1}{30}, \quad 0 \le x \le 30
+\]
+
+\[
+P(\text{Waiting} < 5) = \frac{10}{30} = \frac{1}{3}
+\]
+
+\[
+P(\text{Waiting} > 10) = \frac{10}{30} = \frac{1}{3}
+\]
+
+Q3. Conditional Probability
+
+\[
+P(L) = 0.15
+\]
+
+\[
+P(E) = 0.25
+\]
+
+\[
+P(L \cap E) = 0.08
+\]
+
+\[
+P(\text{Leaves Late}) = 0.75
+\]
+
+\[
+P(\text{Arrives Early} \cap \text{Leaves Late}) = 0.68
+\]
+
+\[
+P = \frac{0.68}{0.75}
+\]
+
+Q4. Poisson Distribution (\lambda = 0.2)
+
+\[
+P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}
+\]
+
+\[
+P(0) = e^{-0.2}
+\]
+
+\[
+P(X \ge 2) = 1 - e^{-0.2} - 0.2 e^{-0.2}
+\]
+
+Q5. Poisson (\lambda = 3.5)
+
+\[
+P(X \ge 2) = 1 - e^{-3.5} - 3.5 e^{-3.5}
+\]
+
+\[
+P(X \le 1) = e^{-3.5}(1 + 3.5)
+\]
+
+Q6. Poisson (\lambda = 3)
+
+\[
+P(X \ge 3) = 1 - e^{-3}\left(1 + 3 + \frac{9}{2}\right)
+\]
+
+\[
+P(X \ge 3 \mid X \ge 1) =
+\frac{1 - e^{-3}\left(1 + 3 + \frac{9}{2}\right)}{1 - e^{-3}}
+\]
+
+
+Q7. Gaussian Random Variable
+
+\[
+f(x) = \frac{1}{\sqrt{8\pi}} \exp\left(-\frac{(x+3)^2}{8}\right)
+\]
+
+\[
+\mu = -3, \quad \sigma = 2
+\]
+
+\[
+Z = \frac{X + 3}{2}
+\]
+
+\[
+P(X \le 0) = 1 - Q(1.5)
+\]
+
+\[
+P(X > 4) = Q(3.5)
+\]
+
+\[
+P(|X+3| < 2) = 1 - 2Q(1)
+\]
+
+
+Q8. Jury Problem
+
+\[
+X \sim \text{Binomial}(12, \theta)
+\]
+
+\[
+P = \sum_{k=8}^{12} \binom{12}{k} \theta^k (1-\theta)^{12-k}
+\]
+
+Q9. PMF
+
+\[
+p(i) = c \frac{\lambda^i}{i!}
+\]
+
+\[
+c = e^{-\lambda}
+\]
+
+\[
+P(0) = e^{-\lambda}
+\]
+
+\[
+P(X > 2) = 1 - e^{-\lambda} \left(1 + \lambda + \frac{\lambda^2}{2}\right)
+\]
+
+
+Q10. System Reliability
+
+\[
+P(X \ge 3) = \sum_{k=3}^{5} \binom{5}{k} p^k (1-p)^{5-k}
+\]
+
+\[
+P(X \ge 2) = \sum_{k=2}^{3} \binom{3}{k} p^k (1-p)^{3-k}
+\]
+
+\[
+P(X \ge k+1), \quad X \sim \text{Bin}(2k+1, p)
+\]
+
+\[
+P(X \ge k), \quad X \sim \text{Bin}(2k-1, p)
+\]
+
+\end{document}
