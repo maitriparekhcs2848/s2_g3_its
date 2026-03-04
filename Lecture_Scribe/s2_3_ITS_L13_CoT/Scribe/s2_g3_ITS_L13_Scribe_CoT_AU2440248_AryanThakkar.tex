@@ -1,0 +1,442 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage[a4paper,margin=1in]{geometry}
+
+\title{CSE400 -- Fundamentals of Probability in Computing}
+\author{Tutorial 1: Complete Lecture Scribe (Solved)}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Q1. Dividing 20 Dishes into Platters}
+
+\textbf{Definitions}
+
+\textbf{Combination:}
+\[
+{n \choose k} = \frac{n!}{k!(n-k)!}
+\]
+
+\textbf{Partitioning identical groups:}
+
+If $n$ objects are divided into $k$ groups of size $r$ each and order does not matter:
+
+\[
+\text{Number of partitions} = \frac{n!}{(r!)^k k!}
+\]
+
+\subsection*{(a) Total number of ways to divide dishes}
+
+Given:
+
+\begin{itemize}
+\item 20 distinct dishes
+\item 4 groups
+\item 5 dishes per group
+\item groups are unlabeled
+\end{itemize}
+
+\[
+N = \frac{20!}{(5!)^4 4!}
+\]
+
+\subsection*{(b) Probability each platter has one cuisine}
+
+Assume:
+
+\begin{itemize}
+\item 5 Italian
+\item 5 Indian
+\item 5 Chinese
+\item 5 Mexican
+\end{itemize}
+
+Total partitions:
+
+\[
+\frac{20!}{(5!)^4 4!}
+\]
+
+Only one arrangement satisfies the requirement.
+
+\[
+P = \frac{1}{\frac{20!}{(5!)^4 4!}}
+\]
+
+---
+\newpage
+\section*{Q2. Bus Waiting Time}
+
+\textbf{Uniform Random Variable}
+
+\[
+X \sim U(a,b)
+\]
+
+\[
+f(x) = \frac{1}{b-a}, \quad a \le x \le b
+\]
+
+Passenger arrival:
+
+\[
+X \sim U(0,30)
+\]
+
+Bus arrivals: 7:00, 7:15, 7:30.
+
+\subsection*{(a) Wait less than 5 minutes}
+
+Intervals:
+
+\begin{itemize}
+\item 7:10 -- 7:15
+\item 7:25 -- 7:30
+\end{itemize}
+
+Total favorable time = 10 minutes.
+
+\[
+P = \frac{10}{30} = \frac{1}{3}
+\]
+
+\subsection*{(b) Wait more than 10 minutes}
+
+Intervals:
+
+\begin{itemize}
+\item 7:00 -- 7:05
+\item 7:15 -- 7:20
+\end{itemize}
+
+\[
+P = \frac{10}{30} = \frac{1}{3}
+\]
+
+---
+\newpage
+\section*{Q3. Conditional Probability}
+
+\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+\]
+
+Let:
+
+\[
+P(L) = 0.15, \quad P(E) = 0.25
+\]
+
+\[
+P(L \cap E) = 0.08
+\]
+
+Union:
+
+\[
+P(L \cup E) = P(L) + P(E) - P(L \cap E)
+\]
+
+\[
+= 0.15 + 0.25 - 0.08
+\]
+
+\[
+= 0.32
+\]
+
+Complement:
+
+\[
+P(L^c \cap E^c) = 1 - 0.32 = 0.68
+\]
+
+\[
+P(E^c) = 1 - 0.25 = 0.75
+\]
+
+\[
+P(L^c | E^c) = \frac{0.68}{0.75} = 0.9067
+\]
+
+---
+\newpage
+\section*{Q4. Typographical Errors (Poisson)}
+
+Poisson distribution:
+
+\[
+P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}
+\]
+
+Given:
+
+\[
+\lambda = 0.2
+\]
+
+\subsection*{(a)}
+
+\[
+P(X=0) = e^{-0.2}
+\]
+
+\[
+P \approx 0.8187
+\]
+
+\subsection*{(b)}
+
+\[
+P(X \ge 2) = 1 - P(0) - P(1)
+\]
+
+\[
+P(1) = 0.2 e^{-0.2}
+\]
+
+\[
+P(X \ge 2) = 1 - e^{-0.2}(1 + 0.2)
+\]
+
+\[
+P \approx 0.0176
+\]
+
+---
+\newpage
+\section*{Q5. Airplane Crashes}
+
+Given:
+
+\[
+\lambda = 3.5
+\]
+
+\subsection*{(a) At least 2 accidents}
+
+\[
+P(X \ge 2) = 1 - P(0) - P(1)
+\]
+
+\[
+P(0) = e^{-3.5}
+\]
+
+\[
+P(1) = 3.5e^{-3.5}
+\]
+
+\[
+P(X \ge 2) = 1 - e^{-3.5}(1+3.5)
+\]
+
+\subsection*{(b) At most 1 accident}
+
+\[
+P(X \le 1) = P(0) + P(1)
+\]
+
+\[
+= e^{-3.5}(1+3.5)
+\]
+
+---
+\newpage
+\section*{Q6. Poisson Accidents on Highway}
+
+\[
+\lambda = 3
+\]
+
+\[
+P(X \ge 3) = 1 - P(0) - P(1) - P(2)
+\]
+
+\[
+P(0) = e^{-3}
+\]
+
+\[
+P(1) = 3e^{-3}
+\]
+
+\[
+P(2) = \frac{9}{2}e^{-3}
+\]
+
+\[
+P(X \ge 3) = 1 - e^{-3}\left(1+3+\frac{9}{2}\right)
+\]
+
+\[
+P \approx 0.5768
+\]
+
+Conditional probability:
+
+\[
+P(X \ge 3 | X \ge 1) =
+\frac{P(X \ge 3)}{P(X \ge 1)}
+\]
+
+\[
+P(X \ge 1) = 1 - P(0) = 1 - e^{-3}
+\]
+
+---
+\newpage
+\section*{Q7. Gaussian Random Variable}
+
+Gaussian pdf:
+
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} 
+\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\]
+
+Given:
+
+\[
+\mu = -3, \quad \sigma = 2
+\]
+
+Standardization:
+
+\[
+Z = \frac{X-\mu}{\sigma}
+\]
+
+Q-function:
+
+\[
+Q(x) = P(Z>x)
+\]
+
+\[
+P(X \le 0) = 1 - Q(1.5)
+\]
+
+\[
+P(X > 4) = Q(3.5)
+\]
+
+\[
+P(|X+3|<2)
+\]
+
+\[
+-5 < X < -1
+\]
+
+\[
+P = \Phi(1) - \Phi(-1)
+\]
+
+\[
+= 1 - 2Q(1)
+\]
+
+---
+\newpage
+\section*{Q8. Jury Decision}
+
+Let:
+
+\[
+X \sim \text{Binomial}(12,\theta)
+\]
+
+Conviction requires at least 8 correct votes.
+
+\[
+P(\text{correct}) =
+\sum_{k=8}^{12} {12 \choose k} \theta^k (1-\theta)^{12-k}
+\]
+
+---
+\newpage
+\section*{Q9. Given PMF}
+
+\[
+p(i) = c \frac{\lambda^i}{i!}, \quad i = 0,1,2,\dots
+\]
+
+Using normalization:
+
+\[
+\sum_{i=0}^{\infty} p(i) = 1
+\]
+
+\[
+c \sum_{i=0}^{\infty} \frac{\lambda^i}{i!} = 1
+\]
+
+\[
+\sum_{i=0}^{\infty} \frac{\lambda^i}{i!} = e^{\lambda}
+\]
+
+Thus:
+
+\[
+c = e^{-\lambda}
+\]
+
+---
+\newpage
+\section*{Q10. System Reliability}
+
+\[
+X \sim \text{Binomial}(n,p)
+\]
+
+System works if:
+
+\[
+X \ge \frac{n}{2}
+\]
+
+\subsection*{(a) Compare $n=3$ and $n=5$}
+
+\[
+P_3 = P(X \ge 2)
+\]
+
+\[
+= 3p^2(1-p) + p^3
+\]
+
+\[
+P_5 = P(X \ge 3)
+\]
+
+\[
+= 10p^3(1-p)^2 + 5p^4(1-p) + p^5
+\]
+
+Solve:
+
+\[
+P_5 > P_3
+\]
+
+Result:
+
+\[
+p > \frac{1}{2}
+\]
+
+\subsection*{(b) General Case}
+
+Compare systems of size $2k+1$ and $2k-1$.
+
+The larger system performs better when
+
+\[
+p > \frac{1}{2}
+\]
+
+\end{document}
