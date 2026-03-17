@@ -1,0 +1,150 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400: Fundamentals of Probability in Computing \ Joint Random Variables and Distributions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Motivation}
+
+In many applications, we study two or more random variables simultaneously.
+
+\textbf{Examples:}
+\begin{itemize}
+\item Height and weight
+\item IQ and birthweight
+\item Exercise frequency and heart disease
+\item Signal-to-noise ratio (SNR) and throughput
+\item Rainfall and temperature
+\end{itemize}
+
+These variables may be \textbf{dependent} or \textbf{independent}. Their relationship is described using a \textbf{joint distribution}.
+
+\textbf{Key idea:} Joint distributions allow us to compute probabilities involving multiple variables and analyze relationships using covariance and correlation.
+
+\section{Joint PMF (Discrete Case)}
+
+Let:
+[
+X \in {x_1, x_2, \dots, x_n}, \quad Y \in {y_1, y_2, \dots, y_m}
+]
+
+\textbf{Definition:}
+[
+p(x_i, y_j) = P(X = x_i, Y = y_j)
+]
+
+\textbf{Properties:}
+\begin{align*}
+0 \le p(x_i, y_j) \le 1 \
+\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i, y_j) = 1
+\end{align*}
+
+\section{Example: Two Dice}
+
+Let:
+[
+X = \text{first die}, \quad T = \text{sum of both dice}
+]
+
+Each outcome has probability:
+[
+\frac{1}{36}
+]
+
+\textbf{Observation:} $X$ and $T$ are \textbf{not independent} since $T$ depends on $X$.
+
+\section{Joint PDF (Continuous Case)}
+
+Let:
+[
+X \in [a,b], \quad Y \in [c,d]
+]
+
+\textbf{Definition:} A function $f(x,y)$ is a joint PDF if:
+[
+P((X,Y) \text{ in small region}) \approx f(x,y),dx,dy
+]
+
+\textbf{Properties:}
+\begin{align*}
+f(x,y) \ge 0 \
+\int_c^d \int_a^b f(x,y),dx,dy = 1
+\end{align*}
+
+\textbf{Note:} $f(x,y)$ may be greater than 1 (it is a density).
+
+\section{Worked Example}
+
+Given:
+[
+f(x,y) = 4xy, \quad 0 \le x \le 1,; 0 \le y \le 1
+]
+
+\subsection{Check Validity}
+
+\begin{align*}
+\int_0^1 \int_0^1 4xy,dx,dy
+&= \int_0^1 \left( \int_0^1 4xy,dx \right) dy \
+&= \int_0^1 2y,dy \
+&= \left[y^2\right]_0^1 = 1
+\end{align*}
+
+Hence, valid joint PDF.
+
+\subsection{Compute Probability}
+
+Event:
+[
+A = {X < 0.5,; Y > 0.5}
+]
+
+\begin{align*}
+P(A)
+&= \int_{0.5}^{1} \int_{0}^{0.5} 4xy,dx,dy \
+&= \int_{0.5}^{1} \left[ 2x^2 y \right]*{0}^{0.5} dy \
+&= \int*{0.5}^{1} 2y(0.25),dy \
+&= \int_{0.5}^{1} \frac{y}{2},dy \
+&= \left[\frac{y^2}{4}\right]_{0.5}^{1} \
+&= \frac{1}{4} - \frac{0.25}{4} = \frac{3}{16}
+\end{align*}
+
+\section{Joint CDF}
+
+\textbf{Definition:}
+[
+F(x,y) = P(X \le x, Y \le y)
+]
+
+\subsection{Continuous Case}
+
+[
+F(x,y) = \int_c^y \int_a^x f(u,v),du,dv
+]
+
+\textbf{Recover PDF:}
+[
+f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y)
+]
+
+\subsection{Discrete Case}
+
+[
+F(x,y) = \sum_{x_i \le x} \sum_{y_j \le y} p(x_i, y_j)
+]
+
+\section{Properties of Joint CDF}
+
+\begin{itemize}
+\item Non-decreasing in both $x$ and $y$
+\item $\lim_{x,y \to -\infty} F(x,y) = 0$
+\item $\lim_{x,y \to \infty} F(x,y) = 1$
+\end{itemize}
+
+\end{document}
