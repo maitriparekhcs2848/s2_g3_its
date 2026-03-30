@@ -1,0 +1,261 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{Lecture 21--22: Inequalities and Tail Bounds}
+\author{CSE400 -- Fundamentals of Probability in Computing}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Introduction and Motivation}
+
+\subsection*{1.1 What is a Tail?}
+
+\textbf{Definition:} \\
+The \textit{tail} of a random variable $(X)$ is:
+\[
+P(X > x)
+\]
+
+This represents the probability that the random variable takes \textbf{large values beyond a threshold $(x)$}. 
+
+\subsection*{1.2 Why Do We Care About Tails?}
+
+From the slides (page 5):
+
+\begin{itemize}
+\item Jobs delayed more than 24 hours
+\item Packets dropped due to full buffer
+\end{itemize}
+
+These represent \textbf{rare but critical events}.
+
+\subsection*{1.3 Key Idea}
+
+\begin{itemize}
+\item \textbf{Mean $\rightarrow$ average behavior (easy to compute)}
+\item \textbf{Tail $\rightarrow$ rare extreme events (hard to compute)} 
+\end{itemize}
+
+Thus, while averages describe normal behavior, \textbf{tails capture worst-case scenarios}, which are crucial in systems.
+
+\subsection*{1.4 Why Are Tails Hard to Compute?}
+
+\begin{itemize}
+\item Requires \textbf{summing many small probabilities}
+\item Leads to \textbf{long and complex expressions} 
+\end{itemize}
+
+\section*{2. Examples of Tail Events}
+
+\subsection*{2.1 Example 1: Load Balancing (Binomial Setting)}
+
+\textbf{Problem:} \\
+Distribute $(n)$ jobs among $(n)$ servers randomly. \\
+Find:
+\[
+P(\text{a server gets } \ge k \text{ jobs})
+\]
+
+\subsubsection*{Intuition (from slides):}
+
+\begin{itemize}
+\item Jobs are assigned randomly
+\item Most servers get few jobs
+\item Occasionally, one server gets many jobs
+\end{itemize}
+
+This is a \textbf{tail event (rare overload)} 
+
+\subsubsection*{Mathematical Model:}
+
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\[
+P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection*{2.2 Example 2: Poisson Arrivals}
+
+\textbf{Problem:} \\
+Jobs arrive at rate $(\lambda)$ (Poisson process). \\
+Find:
+\[
+P(\text{at least } k \text{ arrivals in 1 hour})
+\]
+
+\subsubsection*{Intuition:}
+
+\begin{itemize}
+\item Jobs arrive randomly over time
+\item Most hours $\rightarrow$ moderate arrivals
+\item Sometimes $\rightarrow$ burst of arrivals
+\end{itemize}
+
+This is a \textbf{tail event (sudden spike)} 
+
+\subsubsection*{Mathematical Model:}
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\[
+P(X \ge k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\section*{3. Why Tail Bounds Are Needed}
+
+\subsection*{3.1 Exact Computation is Difficult}
+
+From slides (page 14):
+
+\begin{itemize}
+\item Binomial and Poisson tails require \textbf{long summations}
+\item These are:
+\begin{itemize}
+\item Computationally expensive
+\item Hard to simplify
+\end{itemize}
+\end{itemize}
+
+\subsection*{3.2 Key Idea: Approximate Instead of Exact}
+
+Instead of computing:
+\[
+P(X \ge k)
+\]
+
+We compute an \textbf{upper bound}:
+\[
+P(X \ge k) \le \text{simple expression}
+\]
+
+\subsection*{3.3 Advantages}
+
+\begin{itemize}
+\item Easier to compute
+\item Still provides a \textbf{guarantee}
+\item Useful in system design
+\end{itemize}
+
+\subsection*{3.4 Core Philosophy}
+
+\begin{quote}
+\textbf{``Approximate safely instead of computing exactly.''}
+\end{quote}
+
+\section*{4. Running Example (Used Across Inequalities)}
+
+We analyze all bounds using the same setup:
+
+\subsection*{Experiment:}
+
+\begin{itemize}
+\item Flip a fair coin $(n)$ times
+\end{itemize}
+
+\subsection*{Random Variable:}
+
+\[
+X = \text{number of heads}
+\]
+
+\[
+X \sim \text{Binomial}(n, \tfrac{1}{2})
+\]
+
+\subsection*{Mean:}
+
+\[
+E[X] = \frac{n}{2}
+\]
+
+\subsection*{Tail Question:}
+
+\[
+P\left(X \ge \frac{3n}{4}\right)
+\]
+
+This represents \textbf{getting unusually many heads}, i.e., a \textbf{tail region}. 
+
+\section*{5. Markov's Inequality}
+
+\subsection*{5.1 Key Idea}
+
+\begin{itemize}
+\item Uses \textbf{only the mean}
+\item Large values are \textbf{rare}
+\end{itemize}
+
+Example intuition:
+
+\begin{itemize}
+\item If average = 10 $\rightarrow$ very few values can be $\ge 100$ 
+\end{itemize}
+
+\subsection*{5.2 Statement of Markov's Inequality}
+
+For any non-negative random variable $(X)$ and $(a > 0)$:
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{5.3 Interpretation}
+
+\begin{itemize}
+\item Probability of large deviation is bounded using \textbf{mean only}
+\item No need for full distribution
+\end{itemize}
+
+\subsection*{5.4 Logical Flow}
+
+\begin{enumerate}
+\item We want $(P(X \ge a))$
+\item Exact computation is hard
+\item Use only $(E[X])$
+\item Obtain a simple upper bound
+\end{enumerate}
+
+\section*{6. Overall Conceptual Flow (Important for Exams)}
+
+\begin{enumerate}
+\item \textbf{Tail definition:} \\
+$(P(X > x))$
+
+\item \textbf{Motivation:} \\
+Rare events (failures, overloads)
+
+\item \textbf{Problem:} \\
+Exact computation requires large sums
+
+\item \textbf{Solution:} \\
+Use \textbf{tail bounds}
+
+\item \textbf{First tool:} \\
+Markov's Inequality
+
+\item \textbf{Key principle:} \\
+Use simple statistics (like mean) to bound complex probabilities
+\end{enumerate}
+
+\section*{7. Key Takeaways}
+
+\begin{itemize}
+\item Tail probabilities measure \textbf{extreme events}
+\item Exact computation is \textbf{difficult due to summations}
+\item Tail bounds provide:
+\begin{itemize}
+\item Simplicity
+\item Guarantees
+\end{itemize}
+\item Markov inequality is the \textbf{simplest bound}
+\item More advanced bounds (Chebyshev, Chernoff) improve tightness (as per outline)
+\end{itemize}
+
+\end{document}
