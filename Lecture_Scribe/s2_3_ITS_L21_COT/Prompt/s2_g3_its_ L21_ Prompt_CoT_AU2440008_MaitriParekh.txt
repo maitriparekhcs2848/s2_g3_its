@@ -1,0 +1,9 @@
+Generate a lecture scribe intended to serve as faithful, exam-ready reference material for revision.
+
+Use only the provided context consisting of the lecture slides and relevant textbook excerpts. Do not introduce any material that does not appear in the given context.
+
+While writing the scribe, reason step by step through all definitions, notation, assumptions, theorems or results, proofs or derivations, and worked example solutions exactly as presented in the context.
+
+Make the logical flow between concepts explicit so that a student can clearly follow the reasoning during exam preparation.
+
+Maintain a formal academic tone and structure the scribe clearly for revision purposes.
