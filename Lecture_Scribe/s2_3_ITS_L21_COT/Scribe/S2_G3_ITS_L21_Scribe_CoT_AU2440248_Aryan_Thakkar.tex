@@ -1,0 +1,244 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{CSE400: Fundamentals of Probability in Computing\\
+Lecture 21 \& 22: Inequalities and Tail Bounds}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction and Outline}
+
+Topics covered in this lecture:
+\begin{itemize}
+    \item Tail and motivation of tail bounds
+    \item Markov’s Inequality (definition, proof, example)
+    \item Chebyshev’s Inequality (definition, proof, example)
+    \item Chernoff Bound and Poisson Tail (definition, proof, example)
+    \item Jensen’s Inequality
+    \item Convex Functions
+    \item Case study and system-level understanding
+\end{itemize}
+
+\section{Tail of a Random Variable}
+
+\textbf{Definition}
+
+The tail of a random variable is defined as:
+\[
+P(X > x)
+\]
+
+\textbf{Motivation: Why do we care about tails?}
+
+\begin{itemize}
+    \item Jobs delayed more than 24 hours
+    \item Packets dropped due to full buffer
+\end{itemize}
+
+\textbf{Key Idea}
+\begin{itemize}
+    \item Mean $\rightarrow$ average behavior (easy)
+    \item Tail $\rightarrow$ rare extreme events (hard)
+\end{itemize}
+
+\textbf{Why are tails hard to compute?}
+\begin{itemize}
+    \item Requires summing many small probabilities
+\end{itemize}
+
+\section{Tail Examples}
+
+\subsection{Example 1: Jobs Distributed Across Servers}
+
+\textbf{Problem Statement}
+
+Suppose jobs are distributed among $n$ servers at random. What is the probability that a particular server gets $\geq k$ jobs?
+
+\textbf{Model}
+
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\textbf{Tail Probability}
+
+\[
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection{Example 2: Poisson Arrivals}
+
+\textbf{Problem Statement}
+
+Jobs arrive at a datacenter according to a Poisson process with rate $\lambda$ jobs/hour. What is the probability that $\geq k$ jobs arrive during the first hour?
+
+\textbf{Model}
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\textbf{Tail Probability}
+
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\section{Why Tail Bounds?}
+
+\textbf{Observation}
+
+Exact tail probabilities are often hard to compute.
+
+\textbf{Exact Computations}
+
+For Poisson:
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+For Binomial:
+\[
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\textbf{Issue}
+\begin{itemize}
+    \item Complicated, long sums
+\end{itemize}
+
+\textbf{Idea: Tail Bounds}
+
+Instead of exact value:
+\[
+P(X \geq k) \leq (\text{something simple})
+\]
+
+\textbf{Key Idea}
+
+Approximate safely instead of computing exactly.
+
+\section{Running Example}
+
+\textbf{Experiment}
+
+Flip a fair coin $n$ times.
+
+\textbf{Random Variable}
+
+\[
+X = \text{number of heads}
+\]
+
+\[
+X \sim \text{Binomial}(n, \tfrac{1}{2})
+\]
+
+\textbf{Mean}
+
+\[
+\mu = E[X] = \frac{n}{2}
+\]
+
+\textbf{Question}
+
+\[
+P\left(X \geq \frac{3n}{4}\right)
+\]
+
+\section{Markov’s Inequality}
+
+\textbf{Key Idea}
+
+\begin{itemize}
+    \item Uses only the mean
+    \item Large values are rare
+\end{itemize}
+
+\textbf{Definition (Markov Inequality)}
+
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\subsection{Proof (Idea)}
+
+Start with expectation:
+\[
+E[X] = \sum_{x=0}^{\infty} x \, p_X(x)
+\]
+
+Consider only $X \geq a$:
+\[
+E[X] \geq \sum_{x=a}^{\infty} x \, p_X(x)
+\]
+
+Replace $x$ with $a$:
+\[
+E[X] \geq \sum_{x=a}^{\infty} a \, p_X(x)
+\]
+
+Thus:
+\[
+E[X] \geq a \sum_{x=a}^{\infty} p_X(x)
+\]
+
+\[
+E[X] \geq a \cdot P(X \geq a)
+\]
+
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\section{Markov Inequality on Running Example}
+
+Given:
+\[
+X \sim \text{Binomial}(n, \tfrac{1}{2}), \quad E[X] = \frac{n}{2}
+\]
+
+Apply Markov Inequality:
+\[
+P\left(X \geq \frac{3n}{4}\right) \leq \frac{E[X]}{3n/4}
+\]
+
+\[
+= \frac{n/2}{3n/4}
+\]
+
+\[
+= \frac{2}{3}
+\]
+
+\textbf{Observation}
+\begin{itemize}
+    \item This is a loose bound
+    \item Does not depend on distribution details
+\end{itemize}
+
+\section{Real-Life Example (Markov Inequality)}
+
+\textbf{Scenario: Income Distribution}
+
+Average income = 10,000
+
+\section{Case Study}
+
+\textbf{Problem}
+
+How to predict the worst-case demands on a server?
+
+\section{Conclusion}
+
+\begin{itemize}
+    \item Tail bounds help estimate probabilities of rare events
+    \item Exact computation is difficult
+    \item Inequalities provide simpler guarantees
+\end{itemize}
+
+\end{document}
