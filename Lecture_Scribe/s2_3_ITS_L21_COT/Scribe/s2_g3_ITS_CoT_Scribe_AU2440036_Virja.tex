@@ -1,0 +1,195 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section*{1. Tails -- Definition \& Motivation}
+
+\subsection*{Definition}
+The tail of a random variable $X$ is:
+\[
+P(X > x)
+\]
+This represents the probability of extreme values (right side of distribution).
+
+\subsection*{Why do we care about tails?}
+Examples:
+\begin{itemize}
+    \item Jobs delayed more than 24 hours
+    \item Packets dropped due to full buffer
+\end{itemize}
+
+These are rare but critical events.
+
+\subsection*{Key Idea}
+\begin{itemize}
+    \item Mean $\rightarrow$ average behavior (easy)
+    \item Tail $\rightarrow$ rare extreme events (hard)
+\end{itemize}
+
+\subsection*{Why tails are hard?}
+Requires summing many small probabilities.
+
+\section*{2. Tail Example (Server Problem)}
+
+\subsection*{Problem}
+Suppose $n$ jobs are distributed among $n$ servers randomly. Find:
+\[
+P(\text{a server gets } \ge k \text{ jobs})
+\]
+
+\subsection*{Intuition}
+\begin{itemize}
+    \item Jobs assigned randomly
+    \item Most servers get few jobs
+    \item Occasionally one server gets many jobs
+\end{itemize}
+
+This is a tail event (rare overload).
+
+\subsection*{Model}
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\subsection*{Exact Probability}
+\[
+P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+This is hard to compute, motivating inequalities.
+
+\section*{3. Markov's Inequality}
+
+\subsection*{Definition}
+For a non-negative random variable $X$:
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection*{Assumptions}
+\begin{itemize}
+    \item $X \ge 0$
+    \item $a > 0$
+\end{itemize}
+
+\subsection*{Key Idea}
+Bounding probability using expectation.
+
+\subsection*{Interpretation}
+\begin{itemize}
+    \item Gives an upper bound on tail probability
+    \item Works with minimal information (only mean)
+\end{itemize}
+
+\section*{4. Chebyshev's Inequality}
+
+\subsection*{Definition}
+\[
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+
+\subsection*{Assumptions}
+\begin{itemize}
+    \item $\mu = E[X]$
+    \item $\sigma^2 = \text{Var}(X)$
+\end{itemize}
+
+\subsection*{Key Idea}
+Uses variance to bound deviation from mean.
+
+\subsection*{Interpretation}
+\begin{itemize}
+    \item Gives probability of large deviations
+    \item Stronger than Markov
+\end{itemize}
+
+\section*{5. Chernoff Bound}
+
+\subsection*{Core Idea}
+\[
+P(X \ge a) = P(e^{tX} \ge e^{ta})
+\]
+
+\subsection*{Lower Tail}
+For $t < 0$:
+\[
+P(X \le a) = P(e^{tX} \ge e^{ta})
+\]
+
+\[
+P(X \le a) \le \min_{t < 0} \left\{ \frac{E[e^{tX}]}{e^{ta}} \right\}
+\]
+
+\subsection*{Poisson Tail Derivation}
+
+Let $X \sim \text{Poisson}(\lambda)$.
+
+\subsubsection*{Step 1: Compute $E[e^{tX}]$}
+\[
+E[e^{tX}] = \sum_{i=0}^{\infty} e^{ti} \cdot \frac{e^{-\lambda} \lambda^i}{i!}
+\]
+
+\[
+= e^{-\lambda} \sum_{i=0}^{\infty} \frac{(\lambda e^t)^i}{i!}
+\]
+
+\[
+= e^{-\lambda} \cdot e^{\lambda e^t}
+\]
+
+\[
+= e^{\lambda(e^t - 1)}
+\]
+
+\subsubsection*{Step 2: Bound Tail}
+For $a > \lambda$:
+\[
+P(X \ge a) \le \min_{t > 0} \left\{ e^{\lambda(e^t - 1) - ta} \right\}
+\]
+
+\subsubsection*{Step 3: Optimize $t$}
+\[
+t = \ln\left(\frac{a}{\lambda}\right)
+\]
+
+\subsubsection*{Final Result}
+\[
+P(X \ge a) \le e^{\lambda\left(\frac{a}{\lambda} - 1\right) - a \ln\left(\frac{a}{\lambda}\right)}
+\]
+
+\subsubsection*{Simplified Form}
+\[
+P(X \ge a) \le e^{a - \lambda} \left(\frac{\lambda}{a}\right)^a
+\]
+
+\section*{6. Jensen's Inequality}
+
+\subsection*{Convex Function}
+A function $f$ is convex if:
+\[
+f(E[X]) \le E[f(X)]
+\]
+
+\subsection*{Jensen's Inequality}
+For convex $f$:
+\[
+f(E[X]) \le E[f(X)]
+\]
+
+\subsection*{Key Idea}
+Expectation interacts with convexity.
+
+\section*{7. Case Study}
+
+\subsection*{Problem}
+How to predict worst-case demand on a server?
+
+\subsection*{Insight}
+\begin{itemize}
+    \item Use tail bounds
+    \item Exact computation is hard
+    \item Inequalities give safe upper bounds
+\end{itemize}
+
+\end{document}
