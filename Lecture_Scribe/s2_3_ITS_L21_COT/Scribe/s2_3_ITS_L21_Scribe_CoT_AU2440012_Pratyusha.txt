@@ -1,0 +1,302 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section*{Lecture 21 \& 22: Inequalities and Tail Bounds}
+(CSE400 – Fundamentals of Probability in Computing)
+
+\section*{1. Motivation: Tail Bounds}
+
+The lecture begins by introducing the idea of tail bounds.
+
+\textbf{Key Idea:}
+
+We are interested in probabilities of the form:
+
+\[
+P(X \ge a)
+\]
+
+where $a$ is far from the mean.  
+These probabilities correspond to the tail of a distribution.
+
+\textbf{Interpretation:}
+
+The “tail” represents rare or extreme events.  
+Example: Getting unusually many heads in coin tosses.
+
+\textbf{Running Example (Used Throughout the Lecture)}
+
+\textbf{Experiment:}  
+Flip a fair coin $n$ times.
+
+\textbf{Random Variable:}  
+$X =$ number of heads.
+
+\textbf{Distribution:}
+
+\[
+X \sim \text{Binomial}(n, \frac{1}{2})
+\]
+
+\textbf{Mean:}
+
+\[
+E[X] = \frac{n}{2}
+\]
+
+\textbf{Question:}
+
+\[
+P\left(X \ge \frac{3n}{4}\right)
+\]
+
+\textbf{Interpretation:}  
+This asks: What is the probability of getting significantly more heads than expected?  
+Since the mean is $n/2$, the value $3n/4$ lies in the right tail.
+
+\textbf{Important Observation:}
+
+We will not compute exact probabilities.  
+Instead, we will compute upper bounds.  
+These bounds will become progressively tighter using different inequalities.
+
+\section*{2. Markov’s Inequality}
+
+\textbf{Definition}
+
+Let $X$ be a non-negative random variable.
+
+Then for any $a > 0$:
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\textbf{Assumptions}
+
+$X \ge 0$  
+$E[X]$ exists
+
+\textbf{Interpretation}
+
+The probability that $X$ is large is bounded by its mean scaled by $a$.  
+This is a very general inequality (works for any distribution).
+
+\textbf{Example: Exam Grades}
+
+\textbf{Problem Statement:}  
+Average grade = 70\%  
+“A” cutoff = 90\%  
+Find an upper bound on:
+
+\[
+P(X \ge 90)
+\]
+
+\textbf{Step-by-Step Solution}
+
+\textbf{Step 1: Define Random Variable}
+
+Let $X =$ student grade
+
+\textbf{Step 2: Identify Mean}
+
+\[
+\mu = E[X] = 70
+\]
+
+\textbf{Step 3: Apply Markov’s Inequality}
+
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\textbf{Step 4: Substitute Values}
+
+\[
+P(X \ge 90) \le \frac{70}{90}
+\]
+
+\textbf{Step 5: Simplify}
+
+\[
+P(X \ge 90) \le \frac{7}{9}
+\]
+
+\[
+P(X \ge 90) \le 0.778
+\]
+
+\textbf{Final Result}
+
+At most 77.8\% of students can receive an A.
+
+\textbf{Key Insight:}  
+This bound is valid but loose.  
+It does not use any information beyond the mean.
+
+\section*{3. Chebyshev’s Inequality}
+
+\textbf{Motivation}
+
+Markov’s inequality only uses the mean.  
+To get tighter bounds, we incorporate variance.
+
+\textbf{Definition}
+
+For any random variable $X$ with mean $\mu$ and variance $\sigma^2$:
+
+\[
+P(|X - \mu| \ge a) \le \frac{\sigma^2}{a^2}
+\]
+
+\textbf{Interpretation}
+
+Measures how far $X$ deviates from its mean.  
+Provides a bound on deviation probability.
+
+\textbf{Rewriting for One-Sided Tail}
+
+\[
+P(X \ge \mu + a) \le \frac{\sigma^2}{a^2}
+\]
+
+\textbf{Key Insight}
+
+Uses both:
+
+Mean $\mu$  
+Variance $\sigma^2$
+
+Produces a tighter bound than Markov.
+
+\section*{4. Chernoff Bound}
+
+\textbf{Motivation}
+
+Even Chebyshev bounds can be loose.  
+We want exponentially decreasing bounds.
+
+\textbf{Idea}
+
+Transform the random variable using exponentials.  
+Apply Markov’s inequality on transformed variable.
+
+\textbf{Form (General Idea)}
+
+For suitable $t > 0$:
+
+\[
+P(X \ge a) \le \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\textbf{Key Insight}
+
+This introduces:
+
+Moment Generating Function (MGF)  
+Leads to very tight bounds.
+
+\textbf{For Binomial Distribution}
+
+Chernoff bounds give results of the form:
+
+\[
+P(X \ge (1 + \delta)\mu) \le e^{-c\mu}
+\]
+
+\textbf{Interpretation:}  
+Probability of large deviation drops exponentially.
+
+\section*{5. Poisson Tail}
+
+\textbf{Context}
+
+Similar tail bounds apply to Poisson distributions.
+
+\textbf{Key Idea}
+
+Tail probabilities can also be bounded using exponential techniques.
+
+\section*{6. Jensen’s Inequality}
+
+\textbf{Definition}
+
+If $f$ is a convex function, then:
+
+\[
+f(E[X]) \le E[f(X)]
+\]
+
+\textbf{Convex Function Condition}
+
+A function $f$ is convex if:
+
+\[
+f(\lambda x_1 + (1 - \lambda)x_2) \le \lambda f(x_1) + (1 - \lambda)f(x_2)
+\]
+
+\textbf{Interpretation}
+
+Applying function after expectation gives lower value than expectation after function.
+
+\textbf{Importance}
+
+Used in:
+
+Deriving Chernoff bounds  
+Bounding expectations
+
+\section*{7. Case Study: System-Level Understanding}
+
+\textbf{Problem}
+
+How to predict worst-case demand on a server?
+
+\textbf{Connection to Tail Bounds}
+
+Server load can be modeled as a random variable.  
+We want:
+
+\[
+P(\text{load} \ge \text{capacity})
+\]
+
+\textbf{Use of Inequalities}
+
+Markov $\rightarrow$ rough estimate  
+Chebyshev $\rightarrow$ better estimate  
+Chernoff $\rightarrow$ tight estimate
+
+\section*{Conclusion}
+
+Tail bounds help ensure:
+
+Reliability  
+System safety  
+Performance guarantees
+
+\section*{Final Summary}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Inequality & Uses & Strength \\
+\hline
+Markov & Mean only & Weak \\
+Chebyshev & Mean + Variance & Moderate \\
+Chernoff & Exponential moments & Strong \\
+\hline
+\end{tabular}
+
+\section*{Key Takeaways}
+
+1. Tail bounds estimate probabilities of rare events. \\
+2. Markov inequality provides a basic upper bound. \\
+3. Chebyshev improves it using variance. \\
+4. Chernoff bounds give exponentially tight bounds. \\
+5. Jensen’s inequality supports advanced derivations. \\
+6. These tools are essential for analyzing worst-case scenarios.
+
+\end{document}
