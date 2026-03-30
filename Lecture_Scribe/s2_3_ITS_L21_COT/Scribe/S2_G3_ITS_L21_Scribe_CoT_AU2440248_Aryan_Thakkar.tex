@@ -1,0 +1,466 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+
+\geometry{margin=1in}
+\linespread{1.7}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large CSE400 -- Lecture 21 \& 22: Inequalities and Tail Bounds}
+\end{center}
+
+\vspace{1em}
+
+\section*{1. Introduction and Outline}
+
+\vspace{0.5em}
+
+Topics covered:
+
+\vspace{0.5em}
+
+Tail and motivation of tail bounds
+
+Markov’s Inequality (definition, proof, example)
+
+Chebyshev’s Inequality (definition, proof, example)
+
+Chernoff Bound and Poisson Tail (definition, proof, example)
+
+Jensen’s Inequality (convexity, proof, example)
+
+Case study and system-level understanding
+
+\vspace{1.5em}
+
+\section*{2. Tails of Random Variables}
+
+\vspace{0.5em}
+
+Definition
+
+\vspace{0.5em}
+
+The tail of a random variable is:
+
+\vspace{0.5em}
+
+\[
+P(X > x)
+\]
+
+\vspace{1em}
+
+Why tails matter
+
+\vspace{0.5em}
+
+Jobs delayed more than 24 hours
+
+Packets dropped due to full buffer
+
+\vspace{1em}
+
+Key Idea
+
+\vspace{0.5em}
+
+Mean $\rightarrow$ average behavior (easy)
+
+Tail $\rightarrow$ rare extreme events (hard)
+
+\vspace{1em}
+
+Why tails are hard to compute
+
+Requires summing many small probabilities
+
+\vspace{2em}
+
+\section*{3. Tail Examples}
+
+\vspace{0.5em}
+
+Example 1 (Binomial Setting)
+
+\vspace{0.5em}
+
+Jobs distributed among servers
+
+\vspace{0.5em}
+
+Let
+
+\vspace{0.5em}
+
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\vspace{1em}
+
+Tail probability:
+
+\vspace{0.5em}
+
+\[
+P(X \geq k)
+\]
+
+\vspace{0.5em}
+
+\[
+= \sum_{i=k}^{n}
+\]
+
+\vspace{0.5em}
+
+\[
+\binom{n}{i}
+\]
+
+\vspace{0.5em}
+
+\[
+p^i (1-p)^{n-i}
+\]
+
+\vspace{2em}
+
+Example 2 (Poisson Setting)
+
+\vspace{0.5em}
+
+Jobs arrive with rate
+
+\vspace{0.5em}
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\vspace{1em}
+
+Tail probability:
+
+\vspace{0.5em}
+
+\[
+P(X \geq k)
+\]
+
+\vspace{0.5em}
+
+\[
+= \sum_{i=k}^{\infty}
+\]
+
+\vspace{0.5em}
+
+\[
+e^{-\lambda}
+\]
+
+\vspace{0.5em}
+
+\[
+\frac{\lambda^i}{i!}
+\]
+
+\vspace{2em}
+
+\section*{4. Why Tail Bounds?}
+
+\vspace{0.5em}
+
+Exact computation:
+
+\vspace{0.5em}
+
+These are complicated long sums
+
+\vspace{1em}
+
+Idea
+
+\vspace{0.5em}
+
+Instead of exact value $\rightarrow$ find an upper bound
+
+Easier to compute
+
+Still provides guarantee
+
+\vspace{2em}
+
+\section*{5. Running Example}
+
+\vspace{0.5em}
+
+Flip a fair coin $n$ times
+
+\vspace{0.5em}
+
+\[
+X \sim \text{Binomial}(n, 1/2)
+\]
+
+\vspace{0.5em}
+
+\[
+E[X]
+\]
+
+\vspace{0.5em}
+
+\[
+= \frac{n}{2}
+\]
+
+\vspace{1em}
+
+Question:
+
+\vspace{0.5em}
+
+\[
+P(X \geq \frac{4}{3}n)
+\]
+
+\vspace{2em}
+
+\section*{6. Markov’s Inequality}
+
+\vspace{0.5em}
+
+Key Idea
+
+Uses only the mean
+
+Large values are rare
+
+\vspace{1em}
+
+Markov Inequality
+
+\vspace{0.5em}
+
+\[
+P(X \geq a)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \frac{E[X]}{a}
+\]
+
+\vspace{1em}
+
+Proof Idea
+
+\vspace{0.5em}
+
+\[
+E[X]
+\]
+
+\vspace{0.5em}
+
+\[
+= \sum_{x=0}^{\infty} x p_X(x)
+\]
+
+\vspace{0.5em}
+
+\[
+\geq \sum_{x=a}^{\infty} x p_X(x)
+\]
+
+\vspace{0.5em}
+
+\[
+\geq a \sum_{x=a}^{\infty} p_X(x)
+\]
+
+\vspace{0.5em}
+
+\[
+= a \cdot P(X \geq a)
+\]
+
+\vspace{1em}
+
+Thus:
+
+\vspace{0.5em}
+
+\[
+P(X \geq a)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \frac{E[X]}{a}
+\]
+
+\vspace{2em}
+
+\section*{7. Chebyshev’s Inequality}
+
+\vspace{0.5em}
+
+Key Idea
+
+Uses mean and variance
+
+Controls deviation from mean
+
+\vspace{1em}
+
+\[
+P(|X - \mu| \geq a)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \frac{Var(X)}{a^2}
+\]
+
+\vspace{1em}
+
+Proof Idea
+
+\vspace{0.5em}
+
+\[
+(X - \mu)^2
+\]
+
+\vspace{0.5em}
+
+\[
+P((X - \mu)^2 \geq a^2)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \frac{E[(X - \mu)^2]}{a^2}
+\]
+
+\vspace{0.5em}
+
+\[
+= \frac{Var(X)}{a^2}
+\]
+
+\vspace{2em}
+
+\section*{8. Chernoff Bound}
+
+\vspace{0.5em}
+
+\[
+E[e^{tX}]
+\]
+
+\vspace{0.5em}
+
+\[
+= e^{\lambda(e^t - 1)}
+\]
+
+\vspace{1em}
+
+\[
+P(X \geq a)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \min_{t>0}
+\]
+
+\vspace{0.5em}
+
+\[
+e^{\lambda(e^t -1) - ta}
+\]
+
+\vspace{2em}
+
+\section*{9. Jensen’s Inequality}
+
+\vspace{0.5em}
+
+\[
+E[X^2]
+\]
+
+\vspace{0.5em}
+
+\[
+\geq (E[X])^2
+\]
+
+\vspace{1em}
+
+\[
+g(\alpha x_1 + (1-\alpha)x_2)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq \alpha g(x_1) + (1-\alpha) g(x_2)
+\]
+
+\vspace{2em}
+
+\section*{10. Case Study}
+
+\vspace{0.5em}
+
+Demand: $X$
+
+Capacity: $C$
+
+\vspace{0.5em}
+
+\[
+P(X \geq C)
+\]
+
+\vspace{0.5em}
+
+\[
+\leq 0.01
+\]
+
+\vspace{1em}
+
+\[
+P(X \geq C) \leq \frac{\mu}{C}
+\]
+
+\vspace{0.5em}
+
+\[
+C = 1000000
+\]
+
+\vspace{1em}
+
+\[
+C = 30000
+\]
+
+\end{document}
