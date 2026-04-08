@@ -1,0 +1,614 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+% ===================== SOLUTION COMMAND =====================
+\newcommand{\solution}{
+    \vspace{0.3cm}
+    \noindent\textbf{\textcolor{blue}{Solution:}}
+    \vspace{0.3cm}
+}
+
+% ===================== TITLE =====================
+\title{
+CSE 400: Fundamentals of Probability in Computing \\
+Homework Assignment-6
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}[label=\textbf{Question-\arabic*:}, leftmargin=*]
+
+% ------------------ Q1 ------------------
+\item Let the random vector $X = (X_1, X_2)$ have joint density
+\[
+f_{X_1,X_2}(x_1,x_2)=
+\begin{cases}
+c(x_1+x_2), & 0<x_1<1,\; 0<x_2<1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Find:
+\begin{enumerate}[label=(\alph*)]
+    \item the value of $c$,
+    \item the marginal densities $f_{X_1}(x_1)$ and $f_{X_2}(x_2)$,
+    \item $P(X_1>0.3,\; X_2>0.5)$,
+    \item whether $X_1$ and $X_2$ are independent.
+\end{enumerate}
+
+\solution
+
+% -------- (a) --------
+\textbf{(a) Find $c$}
+
+\[
+\int_0^1 \int_0^1 c(x_1+x_2)\,dx_2\,dx_1 = 1
+\]
+
+\[
+\Rightarrow c(1)=1 \;\Rightarrow\; \boxed{c=1}
+\]
+
+% -------- (b) --------
+\textbf{(b) Marginal densities}
+
+\[
+f_{X_1}(x_1)=\int_0^1 (x_1+x_2)\,dx_2
+= x_1 + \frac{1}{2}
+\]
+
+\[
+f_{X_2}(x_2)=\int_0^1 (x_1+x_2)\,dx_1
+= x_2 + \frac{1}{2}
+\]
+
+% -------- (c) --------
+\textbf{(c) Probability}
+
+\[
+P=\int_{0.3}^{1}\int_{0.5}^{1}(x_1+x_2)\,dx_2\,dx_1
+= \boxed{0.49}
+\]
+
+% -------- (d) --------
+\textbf{(d) Independence}
+
+\[
+f_{X_1}f_{X_2} \neq f_{joint}
+\Rightarrow \boxed{\text{Not independent}}
+
+\newpage
+
+% ------------------ Q2 ------------------
+\item Suppose the random vector $X = (X_1, X_2, X_3)$ is uniformly distributed over the rectangular box $-1<x_1<1,\; 0<x_2<2,\; 1<x_3<3$. Thus,
+\[
+f_{X_1,X_2,X_3}(x_1,x_2,x_3)=
+\begin{cases}
+k, & -1<x_1<1,\; 0<x_2<2,\; 1<x_3<3 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Find:
+\begin{enumerate}[label=(\alph*)]
+    \item the constant $k$,
+    \item the joint marginal density $f_{X_1,X_3}(x_1,x_3)$,
+    \item the marginal density $f_{X_2}(x_2)$,
+    \item the conditional density $f_{X_1|X_2,X_3}(x_1\mid x_2,x_3)$,
+    \item whether $X_1, X_2, X_3$ are mutually independent.
+\end{enumerate}
+
+\solution
+
+% -------- (a) --------
+\textbf{(a) Find $k$}
+
+Volume of box $= 2 \times 2 \times 2 = 8$
+
+\[
+k \cdot 8 = 1 \Rightarrow \boxed{k = \frac{1}{8}}
+\]
+
+% -------- (b) --------
+\textbf{(b) Joint marginal $f_{X_1,X_3}(x_1,x_3)$}
+
+\[
+f_{X_1,X_3}(x_1,x_3)=\int_0^2 \frac{1}{8}\,dx_2
+= \frac{1}{8}\cdot 2
+= \frac{1}{4}
+\]
+
+% -------- (c) --------
+\textbf{(c) Marginal $f_{X_2}(x_2)$}
+
+\[
+f_{X_2}(x_2)=\int_{-1}^{1}\int_{1}^{3} \frac{1}{8}\,dx_3\,dx_1
+= \frac{1}{8}\cdot 2 \cdot 2
+= \frac{1}{2}
+\]
+
+% -------- (d) --------
+\textbf{(d) Conditional density}
+
+\[
+f_{X_1|X_2,X_3}=\frac{1/8}{1/4}=\frac{1}{2}
+\]
+
+% -------- (e) --------
+\textbf{(e) Independence}
+
+\[
+f_{X_1}=\frac{1}{2},\quad f_{X_2}=\frac{1}{2},\quad f_{X_3}=\frac{1}{2}
+\]
+
+\[
+f_{X_1}f_{X_2}f_{X_3}=\frac{1}{8}=f_{joint}
+\]
+
+\[
+\Rightarrow \boxed{\text{Independent}}
+
+\newpage
+
+% ------------------ Q3 ------------------
+\item Let $Y = AX$, where
+\[
+\mu_X =
+\begin{bmatrix}1\\-1\\2\end{bmatrix},\quad
+A =
+\begin{bmatrix}1&2&0\\0&-1&1\\2&0&1\end{bmatrix},\quad
+\Sigma_X =
+\begin{bmatrix}4&1&0\\1&3&-1\\0&-1&5\end{bmatrix}.
+\]
+
+Compute:
+\begin{enumerate}[label=(\alph*)]
+    \item the mean vector $\mu_Y$,
+    \item the covariance matrix $\Sigma_Y$,
+    \item the variance of $Y_1+Y_2$.
+\end{enumerate}
+
+\solution
+
+\textbf{(a) Mean vector}
+
+\[
+\mu_Y = A\mu_X =
+\begin{bmatrix}
+1 & 2 & 0\\
+0 & -1 & 1\\
+2 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1\\
+-1\\
+2
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1\\
+3\\
+4
+\end{bmatrix}
+\]
+
+\textbf{(b) Covariance matrix}
+
+\[
+\Sigma_Y = A\Sigma_X A^T
+\]
+
+\[
+\Sigma_Y =
+\begin{bmatrix}
+20 & -9 & 10\\
+-9 & 10 & 4\\
+10 & 4 & 21
+\end{bmatrix}
+\]
+
+\textbf{(c) Variance of $Y_1+Y_2$}
+
+\[
+\mathrm{Var}(Y_1+Y_2)
+= \Sigma_{11} + \Sigma_{22} + 2\Sigma_{12}
+= 20 + 10 + 2(-9)
+= 12
+\]
+
+
+\newpage
+
+\item Three sensor readings are modeled by the random vector $X=(X_1,X_2,X_3)^T$ with
+\[
+\mu_X =
+\begin{bmatrix}2\\0\\-1\end{bmatrix},\quad
+\Sigma_X =
+\begin{bmatrix}6&2&1\\2&5&-1\\1&-1&4\end{bmatrix},\quad
+A =
+\begin{bmatrix}1&1&0\\0&2&-1\\1&0&1\end{bmatrix}.
+\]
+
+A processing unit forms $Y = AX$. Find:
+\begin{enumerate}[label=(\alph*)]
+    \item $\mu_Y$,
+    \item $\Sigma_Y$,
+    \item which component of $Y$ has the largest variance.
+\end{enumerate}
+
+\solution
+
+\textbf{(a) Mean vector}
+
+\[
+\mu_Y = A\mu_X =
+\begin{bmatrix}
+1 & 1 & 0\\
+0 & 2 & -1\\
+1 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+2\\
+0\\
+-1
+\end{bmatrix}
+=
+\begin{bmatrix}
+2\\
+1\\
+1
+\end{bmatrix}
+\]
+
+\textbf{(b) Covariance matrix}
+
+\[
+\Sigma_Y = A\Sigma_X A^T
+\]
+
+\[
+\Sigma_Y =
+\begin{bmatrix}
+15 & 11 & 6\\
+11 & 28 & -1\\
+6 & -1 & 12
+\end{bmatrix}
+\]
+
+\textbf{(c) Largest variance}
+
+\[
+\mathrm{Var}(Y_1)=15,\;
+\mathrm{Var}(Y_2)=28,\;
+\mathrm{Var}(Y_3)=12
+\]
+
+\[
+\Rightarrow Y_2 \text{ has the largest variance}
+\]
+
+\newpage
+% ------------------ Q5 ------------------
+\item A random vector $X = (X_1, X_2, X_3)^T$ has mean vector
+\[
+\mu_X =
+\begin{bmatrix}1\\2\\-1\end{bmatrix}
+\]
+and second-moment matrix $R_{XX} = E[XX^T]$:
+\[
+R_{XX} =
+\begin{bmatrix}5&3&-1\\3&10&-2\\-1&-2&6\end{bmatrix}.
+\]
+
+Find the covariance matrix $C_{XX}$.
+
+\solution
+
+formula:
+\[
+C_{XX} = R_{XX} - \mu_X\mu_X^T
+\]
+
+so $\mu_X\mu_X^T$:
+
+\[
+\mu_X\mu_X^T =
+\begin{bmatrix}1\\2\\-1\end{bmatrix}
+\begin{bmatrix}1&2&-1\end{bmatrix}
+=
+\begin{bmatrix}1&2&-1\\2&4&-2\\-1&-2&1\end{bmatrix}
+\]
+
+Subtract:
+
+\[
+C_{XX} =
+\begin{bmatrix}5&3&-1\\3&10&-2\\-1&-2&6\end{bmatrix}
+-
+\begin{bmatrix}1&2&-1\\2&4&-2\\-1&-2&1\end{bmatrix}
+=
+\begin{bmatrix}4&1&0\\1&6&0\\0&0&5\end{bmatrix}
+\]
+
+\newpage
+
+% ------------------ Q6 ------------------
+\item Suppose a random vector $X = (X_1, X_2, X_3)^T$ has covariance matrix
+\[
+C_{XX} =
+\begin{bmatrix}3&1&-1\\1&4&2\\-1&2&5\end{bmatrix}
+\]
+and mean vector
+\[
+\mu_X =
+\begin{bmatrix}2\\-1\\1\end{bmatrix}.
+\]
+
+Find the correlation matrix $R_{XX} = E[XX^T]$.
+
+\solution
+
+so formula:
+\[
+R_{XX} = C_{XX} + \mu_X\mu_X^T
+\]
+
+Compute $\mu_X\mu_X^T$:
+
+\[
+\mu_X\mu_X^T =
+\begin{bmatrix}2\\-1\\1\end{bmatrix}
+\begin{bmatrix}2&-1&1\end{bmatrix}
+=
+\begin{bmatrix}4&-2&2\\-2&1&-1\\2&-1&1\end{bmatrix}
+\]
+
+Add:
+
+\[
+R_{XX} =
+\begin{bmatrix}3&1&-1\\1&4&2\\-1&2&5\end{bmatrix}
++
+\begin{bmatrix}4&-2&2\\-2&1&-1\\2&-1&1\end{bmatrix}
+=
+\begin{bmatrix}7&-1&1\\-1&5&1\\1&1&6\end{bmatrix}
+\]
+
+\newpage
+
+% ------------------ Q7 ------------------
+\item Suppose $(X_1, X_2, X_3)$ is a jointly Gaussian random vector with mean vector
+\[
+\mu =
+\begin{bmatrix}\mu_1\\\mu_2\\\mu_3\end{bmatrix}
+\]
+and covariance matrix
+\[
+\Sigma =
+\begin{bmatrix}\sigma_1^2&0&0\\0&\sigma_2^2&0\\0&0&\sigma_3^2\end{bmatrix}.
+\]
+
+Prove that the joint density factors as $f_{X_1,X_2,X_3}(x_1,x_2,x_3) = f_{X_1}(x_1)\,f_{X_2}(x_2)\,f_{X_3}(x_3)$, and hence conclude that $X_1, X_2, X_3$ are independent.
+
+\solution
+
+Since the covariance matrix is diagonal, all off-diagonal terms are zero.
+
+\[
+\text{Cov}(X_i, X_j) = 0 \quad \text{for } i \neq j
+\]
+
+For a jointly Gaussian random vector, zero covariance implies independence.
+
+The joint PDF of a multivariate Gaussian is:
+
+\[
+f(x_1,x_2,x_3)
+=
+\frac{1}{(2\pi)^{3/2}|\Sigma|^{1/2}}
+\exp\left(
+-\frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu)
+\right)
+\]
+
+Since $\Sigma$ is diagonal,
+
+\[
+|\Sigma| = \sigma_1^2 \sigma_2^2 \sigma_3^2
+\]
+
+and
+
+\[
+\Sigma^{-1} =
+\begin{bmatrix}
+\frac{1}{\sigma_1^2} & 0 & 0\\
+0 & \frac{1}{\sigma_2^2} & 0\\
+0 & 0 & \frac{1}{\sigma_3^2}
+\end{bmatrix}
+\]
+
+So the exponent becomes:
+
+\[
+-\frac{(x_1-\mu_1)^2}{2\sigma_1^2}
+-\frac{(x_2-\mu_2)^2}{2\sigma_2^2}
+-\frac{(x_3-\mu_3)^2}{2\sigma_3^2}
+\]
+
+Thus,
+
+\[
+f(x_1,x_2,x_3)
+=
+\frac{1}{(2\pi)^{3/2}\sigma_1\sigma_2\sigma_3}
+\exp\left(
+-\frac{(x_1-\mu_1)^2}{2\sigma_1^2}
+\right)
+\exp\left(
+-\frac{(x_2-\mu_2)^2}{2\sigma_2^2}
+\right)
+\exp\left(
+-\frac{(x_3-\mu_3)^2}{2\sigma_3^2}
+\right)
+\]
+
+\[
+= f_{X_1}(x_1)\; f_{X_2}(x_2)\; f_{X_3}(x_3)
+\]
+
+Hence, the joint PDF factors into the product of marginal PDFs.
+
+\[
+\Rightarrow \boxed{X_1, X_2, X_3 \text{ are independent}}
+\]
+
+\newpage
+
+% ------------------ Q8 ------------------
+\item Let $X = (X_1, X_2, X_3, X_4)^T$ be a 4-variate jointly Gaussian random vector with mean $\mu = (\mu_1,\mu_2,\mu_3,\mu_4)^T$ and covariance matrix $\Sigma = \mathrm{diag}(\sigma_1^2,\sigma_2^2,\sigma_3^2,\sigma_4^2)$.
+
+Show that the joint density is
+\[
+f_X(x) = \prod_{i=1}^{4}
+\frac{1}{\sqrt{2\pi\sigma_i^2}}
+\exp\!\left(-\frac{(x_i-\mu_i)^2}{2\sigma_i^2}\right).
+\]
+Explain clearly why zero covariances imply independence in this jointly Gaussian case.
+
+\solution
+
+\solution
+
+ covariance matrix is diagonal so all covariances are 0.
+
+For jointly Gaussian variables, the joint PDF is:
+
+\[
+f_X(x) =
+\frac{1}{(2\pi)^2 \sigma_1\sigma_2\sigma_3\sigma_4}
+\exp\left(
+-\frac{1}{2}\sum_{i=1}^{4}\frac{(x_i-\mu_i)^2}{\sigma_i^2}
+\right)
+\]
+
+so here
+
+\[
+= \prod_{i=1}^{4}
+\frac{1}{\sqrt{2\pi}\sigma_i}
+\exp\left(-\frac{(x_i-\mu_i)^2}{2\sigma_i^2}\right)
+\]
+
+\[
+= f_{X_1}(x_1)\,f_{X_2}(x_2)\,f_{X_3}(x_3)\,f_{X_4}(x_4)
+\]
+
+\[
+\Rightarrow \boxed{X_1, X_2, X_3, X_4 \text{ are independent}}
+\]
+
+SO, Zero covariance removes all cross terms, so joint PDF splits into product independence.
+
+\newpage
+
+% ------------------ Q9 ------------------
+\item Prove that
+\[
+\mathrm{Var}(X-Y) = \mathrm{Var}(X) + \mathrm{Var}(Y) - 2\,\mathrm{Cov}(X,Y).
+\]
+
+\solution
+
+here variance:
+
+\[
+\mathrm{Var}(X-Y) = E\!\left[(X-Y)^2\right] - \left(E[X-Y]\right)^2
+\]
+
+we will expand $(X-Y)^2 = X^2 - 2XY + Y^2$:
+
+\[
+E[(X-Y)^2] = E[X^2] + E[Y^2] - 2E[XY]
+\]
+
+
+\[
+\left(E[X-Y]\right)^2 = \left(E[X]-E[Y]\right)^2 = E[X]^2 + E[Y]^2 - 2E[X]E[Y]
+\]
+
+Subtract:
+
+\[
+\mathrm{Var}(X-Y)
+= \bigl(E[X^2]-E[X]^2\bigr) + \bigl(E[Y^2]-E[Y]^2\bigr) - 2\bigl(E[XY]-E[X]E[Y]\bigr)
+\]
+
+\[
+\boxed{\mathrm{Var}(X-Y) = \mathrm{Var}(X) + \mathrm{Var}(Y) - 2\,\mathrm{Cov}(X,Y)}
+\]
+
+\newpage
+\item A received signal is modeled as $R = S + N_1 - N_2$, where $S$ is the transmitted signal and $N_1, N_2$ are noise terms.
+
+Using variance and covariance properties, derive an expression for $\mathrm{Var}(R)$ in terms of $\mathrm{Var}(S)$, $\mathrm{Var}(N_1)$, $\mathrm{Var}(N_2)$, and the pairwise covariances. Then simplify when $S, N_1, N_2$ are pairwise uncorrelated.
+
+\solution
+
+Given,
+\[
+R = S + N_1 - N_2
+\]
+
+Using the formula:
+\[
+\mathrm{Var}(aX + bY + cZ)
+= a^2\mathrm{Var}(X) + b^2\mathrm{Var}(Y) + c^2\mathrm{Var}(Z)
++ 2ab\,\mathrm{Cov}(X,Y)
++ 2ac\,\mathrm{Cov}(X,Z)
++ 2bc\,\mathrm{Cov}(Y,Z)
+\]
+
+Here,
+\[
+R = 1\cdot S + 1\cdot N_1 + (-1)\cdot N_2
+\]
+
+So,
+
+\[
+\mathrm{Var}(R)
+= \mathrm{Var}(S) + \mathrm{Var}(N_1) + \mathrm{Var}(N_2)
++ 2\mathrm{Cov}(S,N_1)
+- 2\mathrm{Cov}(S,N_2)
+- 2\mathrm{Cov}(N_1,N_2)
+\]
+
+\textbf{If $S, N_1, N_2$ are pairwise uncorrelated:}
+
+\[
+\mathrm{Cov}(S,N_1) = 0,\quad
+\mathrm{Cov}(S,N_2) = 0,\quad
+\mathrm{Cov}(N_1,N_2) = 0
+\]
+
+Hence,
+
+\[
+\mathrm{Var}(R)
+= \mathrm{Var}(S) + \mathrm{Var}(N_1) + \mathrm{Var}(N_2)
+\]
+
+\[
+\Rightarrow \boxed{\mathrm{Var}(R)=\mathrm{Var}(S)+\mathrm{Var}(N_1)+\mathrm{Var}(N_2)}
+\]
+\end{enumerate}
+
+\end{document}
