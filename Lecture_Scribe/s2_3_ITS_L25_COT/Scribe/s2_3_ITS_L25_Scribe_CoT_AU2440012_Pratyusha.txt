@@ -1,0 +1,344 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{Lecture 25: Problem Solving on Inequalities — Lecture Scribe}
+
+\subsection*{Q1: Application of Markov’s Inequality}
+
+Let \( X \geq 0 \) denote annual income with:
+\[
+E[X] = 40000
+\]
+
+\subsubsection*{Markov’s Inequality}
+
+For any \( a > 0 \):
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\subsubsection*{(a) Upper bound for \( P(X \geq 120000) \)}
+
+Applying Markov’s inequality:
+\[
+P(X \geq 120000) \leq \frac{40000}{120000} = \frac{1}{3}
+\]
+
+\subsubsection*{(b) Why not applicable for \( P(X < 10000) \)}
+
+\begin{itemize}
+\item Markov’s inequality applies only to probabilities of the form:
+\[
+P(X \geq a)
+\]
+\item \( P(X < 10000) \) is a \textbf{lower tail probability}
+\item Therefore, \textbf{Markov’s inequality cannot be applied}
+\end{itemize}
+
+\hrule
+
+\subsection*{Q2: Chebyshev’s Inequality}
+
+Given:
+\[
+E[X] = \mu = 100, \quad \sigma = 2 \Rightarrow \sigma^2 = 4
+\]
+
+A resistor is defective if:
+\[
+|X - \mu| \geq 6
+\]
+
+\subsubsection*{Chebyshev’s Inequality}
+\[
+P(|X - \mu| \geq a) \leq \frac{\sigma^2}{a^2}
+\]
+
+\subsubsection*{(a) Probability of defective resistor}
+\[
+P(|X - 100| \geq 6) \leq \frac{4}{36} = \frac{1}{9}
+\]
+
+\subsubsection*{(b) Expected defective resistors (out of 10000)}
+\[
+10000 \times \frac{1}{9} = \frac{10000}{9} \approx 1111
+\]
+
+\hrule
+
+\subsection*{Q3: Convexity and Expectation Inequality}
+
+Given:
+\[
+0 \leq Y \leq 1, \quad E[Y] = \mu
+\]
+
+\subsubsection*{Step 1: Express as convex combination}
+\[
+Y = (1 - Y)\cdot 0 + Y \cdot 1
+\]
+
+\subsubsection*{Step 2: Use convexity of \( e^x \)}
+
+For convex function:
+\[
+e^{\lambda x_1 + (1-\lambda)x_2} \leq \lambda e^{x_1} + (1-\lambda)e^{x_2}
+\]
+
+Substitute:
+\[
+x_1 = t, \quad x_2 = 0
+\]
+weights:
+\[
+Y, \; 1-Y
+\]
+
+\[
+e^{tY} \leq (1-Y)e^0 + Y e^t
+\]
+\[
+e^{tY} \leq 1 - Y + Y e^t
+\]
+
+\subsubsection*{Step 3: Take expectation}
+\[
+E[e^{tY}] \leq E[1 - Y + Y e^t]
+\]
+
+Using linearity:
+\[
+E[e^{tY}] \leq 1 - E[Y] + e^t E[Y]
+\]
+
+Substitute \( E[Y] = \mu \):
+\[
+E[e^{tY}] \leq 1 - \mu + \mu e^t
+\]
+
+\hrule
+
+\subsection*{Q4: Jensen’s Inequality}
+
+Given:
+\[
+g(x) = x^a, \quad a > 1
+\]
+
+\subsubsection*{Step 1: Prove convexity}
+\[
+g'(x) = ax^{a-1}, \quad g''(x) = a(a-1)x^{a-2}
+\]
+
+Since \( a > 1, \; x > 0 \):
+\[
+g''(x) > 0 \Rightarrow g(x) \text{ is convex}
+\]
+
+\subsubsection*{Step 2: Apply Jensen’s inequality}
+\[
+g(E[X]) \leq E[g(X)]
+\]
+\[
+(E[X])^a \leq E[X^a]
+\]
+
+\hrule
+
+\subsection*{Q5: Derivation of Chebyshev’s Inequality}
+
+Given:
+\[
+E[X] = \mu, \quad Var(X) = \sigma^2
+\]
+
+\subsubsection*{Step 1: Use Markov’s inequality}
+Let:
+\[
+Z = (X - \mu)^2 \geq 0
+\]
+\[
+P(Z \geq a) \leq \frac{E[Z]}{a}
+\]
+
+\subsubsection*{Step 2: Rewrite probability}
+\[
+P(|X - \mu| \geq k\sigma) = P((X - \mu)^2 \geq k^2 \sigma^2)
+\]
+
+\subsubsection*{Step 3: Apply Markov}
+\[
+P((X - \mu)^2 \geq k^2 \sigma^2) \leq \frac{E[(X - \mu)^2]}{k^2 \sigma^2}
+\]
+
+\subsubsection*{Step 4: Use variance definition}
+\[
+E[(X - \mu)^2] = \sigma^2
+\]
+\[
+P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
+\]
+
+\hrule
+
+\subsection*{Q6: Combined Use of Inequalities}
+
+\subsubsection*{(a) Markov}
+\[
+P(X \geq 1000) \leq \frac{500}{1000} = \frac{1}{2}
+\]
+
+\subsubsection*{(b) Chebyshev}
+\[
+P(|X - 500| \geq 100) \leq \frac{100}{10000} = \frac{1}{100}
+\]
+\[
+P(|X - 500| < 100) \geq \frac{99}{100}
+\]
+
+\hrule
+
+\subsection*{Q7: Moment Generating Function Bounds}
+
+\subsubsection*{Step 1: MGF of \( X_i \)}
+\[
+E[e^{tX_i}] = \frac{e^t + e^{-t}}{2}
+\]
+
+\[
+e^t + e^{-t} = 2 \sum_{n=0}^{\infty} \frac{t^{2n}}{(2n)!}
+\]
+
+\[
+(2n)! \geq n! 2^n
+\]
+
+\[
+\frac{t^{2n}}{(2n)!} \leq \frac{(t^2/2)^n}{n!}
+\]
+
+\[
+e^t + e^{-t} \leq 2 e^{t^2/2}
+\]
+
+\[
+E[e^{tX_i}] \leq e^{t^2/2}
+\]
+
+\subsubsection*{Step 2: MGF of \( S_n \)}
+\[
+E[e^{tS_n}] = \prod E[e^{tX_i}] \leq e^{nt^2/2}
+\]
+
+\hrule
+
+\subsection*{Q8: Expectation and Variance of Pairing}
+
+\[
+X = \sum_{i=1}^{100} X_i
+\]
+
+\[
+E[X_i] = \frac{100}{199}
+\]
+
+\[
+E[X] = 100 \cdot \frac{100}{199} \approx 50.25
+\]
+
+\subsubsection*{Variance}
+\[
+Var(X_i) = \frac{100}{199}\cdot \frac{99}{199}
+\]
+
+\[
+Cov(X_i, X_j) = \frac{100}{199} \cdot \frac{99}{197} - \left(\frac{100}{199}\right)^2
+\]
+
+\[
+Var(X) \approx 25.126
+\]
+
+\subsubsection*{Chebyshev bound}
+\[
+P(X \leq 30) \leq P(|X - 50.25| \geq 20.25)
+\]
+\[
+\leq \frac{25.126}{(20.25)^2} \approx 0.061
+\]
+
+\subsubsection*{One-sided Chebyshev}
+\[
+P(X \leq 30) \leq \frac{25.126}{25.126 + (20.25)^2} \approx 0.058
+\]
+
+\hrule
+
+\subsection*{Q9: Jensen’s Inequality on Sum}
+
+\[
+\frac{1}{n} \sum \sqrt{x_i^2 + 1} \geq \sqrt{1 + \left(\frac{1+2+\cdots+n}{n}\right)^2}
+\]
+
+\[
+1+2+\cdots+n = \frac{n(n+1)}{2}
+\]
+
+\[
+= \frac{1}{2} \sqrt{(n+1)^2 + 4}
+\]
+
+\[
+\sum \sqrt{i^2 + 1} \geq \frac{n}{2}\sqrt{n^2 + 2n + 5}
+\]
+
+\hrule
+
+\subsection*{Q10: Bounding Poisson Tail}
+
+\[
+X \sim \text{Poisson}(20)
+\]
+
+\[
+E[X] = 20, \quad Var(X) = 20
+\]
+
+\subsubsection*{(a) Markov}
+\[
+P(X \geq 26) \leq \frac{10}{13}
+\]
+
+\subsubsection*{(b) One-sided Chebyshev}
+\[
+P(X \geq 26) \leq \frac{5}{14}
+\]
+
+\subsubsection*{(c) Chernoff Bound}
+\[
+P(X \geq 26) \leq \inf_{t>0} e^{20(e^t -1) - 26t}
+\]
+
+\[
+20e^t = 26 \Rightarrow t = \ln(1.3)
+\]
+
+\[
+\approx 0.439
+\]
+
+\hrule
+
+\subsection*{Final Summary of Bounds}
+
+\begin{itemize}
+\item Markov: \( \frac{10}{13} \approx 0.769 \)
+\item Chebyshev: \( \frac{5}{14} \approx 0.357 \)
+\item Chernoff: \( \approx 0.439 \)
+\end{itemize}
+
+\end{document}
