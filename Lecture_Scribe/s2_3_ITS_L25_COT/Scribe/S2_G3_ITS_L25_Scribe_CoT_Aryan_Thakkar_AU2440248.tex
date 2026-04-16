@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{CSE 400: Fundamentals of Probability in Computing \\ 
+Lecture 25 -- Tutorial Session: Problem Solving (Inequalities)}
+\date{April 9, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Q1: Markov’s Inequality}
+
+\textbf{Given:} \\
+Average annual income = \$40,000
+
+\textbf{(a) Requirement:} \\
+Use Markov’s inequality to find an upper bound on:
+\[
+P(\text{income} \geq 120{,}000)
+\]
+
+\textbf{(b) Requirement:} \\
+Determine whether Markov’s inequality can be used to bound:
+\[
+P(\text{income} < 10{,}000)
+\]
+Justify the answer.
+
+\section*{Q2: Chebyshev’s Inequality}
+
+\textbf{Given:} \\
+Mean: $\mu = 100\,\Omega$ \\
+Standard deviation: $\sigma = 2\,\Omega$ \\
+Defective range: outside $[94\,\Omega, 106\,\Omega]$
+
+\textbf{(a) Requirement:} \\
+Use Chebyshev’s inequality to find an upper bound on the probability that a resistor is defective.
+
+\textbf{(b) Requirement:} \\
+If 10,000 resistors are produced, determine the maximum expected number of defective units.
+
+\section*{Q3: Convexity and Expectation Inequality}
+
+\textbf{Given:} \\
+Random variable $Y$ such that $0 \leq Y \leq 1$ \\
+$E[Y] = \mu$ \\
+Function: $g(x) = e^x$
+
+\textbf{Requirement:} \\
+Using convexity of $g(x)$, prove:
+\[
+E[e^{tY}] \leq 1 - \mu + \mu e^t
+\]
+
+\section*{Q4: Jensen’s Inequality}
+
+\textbf{Given:} \\
+Random variable $X > 0$ \\
+$E[X] = \mu$ \\
+Cost function: $C(X) = X^a$, where $a > 1$
+
+\textbf{Requirement:} \\
+Using Jensen’s inequality, prove:
+\[
+E[X^a] \geq (E[X])^a
+\]
+
+\section*{Q5: Chebyshev’s Inequality (Standard Form)}
+
+\textbf{Given:} \\
+Random variable $X$ with mean $\mu$ \\
+Variance $\sigma^2$ \\
+Real number $k > 0$
+
+\textbf{Requirement:} \\
+Show that:
+\[
+P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
+\]
+
+\section*{Q6: Production Random Variable}
+
+\textbf{Given:} \\
+Weekly production is a random variable \\
+Mean = 500
+
+\textbf{(a) Requirement:} \\
+Determine what can be said about:
+\[
+P(\text{production} \geq 1000)
+\]
+
+\textbf{(b) Additional Given:} \\
+Variance = 100
+
+\textbf{Requirement:} \\
+Determine what can be said about:
+\[
+P(400 \leq \text{production} \leq 600)
+\]
+
+\section*{Q7: Chernoff Bounds (Independent Random Variables)}
+
+\textbf{Given:} \\
+Independent trials $X_i \in \{+1, -1\}$ \\
+$P(X_i = 1) = P(X_i = -1) = \frac{1}{2}$
+
+\[
+S_n = \sum_{i=1}^{n} X_i
+\]
+
+\textbf{(a) Requirement:} \\
+Show:
+\[
+E[e^{tX_i}] \leq e^{t^2/2}
+\]
+
+\textbf{(b) Requirement:} \\
+Deduce:
+\[
+E[e^{tS_n}] \leq e^{nt^2/2}
+\]
+
+\section*{Q8: Pairing Problem}
+
+\textbf{Given:} \\
+200 people: 100 men and 100 women \\
+Randomly divided into 100 pairs
+
+\textbf{Requirement:} \\
+Find an upper bound on the probability that at most 30 pairs consist of one man and one woman.
+
+\section*{Q9: Inequality Proof}
+
+\textbf{Requirement:} \\
+Show that:
+\[
+1 + \frac{1}{2^2} + \frac{1}{3^2} + \cdots + \frac{1}{n^2} \geq \frac{2^n}{n + 2^n + 5}
+\]
+
+\section*{Q10: Poisson Random Variable}
+
+\textbf{Given:} \\
+$X \sim \text{Poisson}(20)$
+
+\textbf{(a) Requirement:} \\
+Use Markov’s inequality to bound:
+\[
+p = P(X \geq 26)
+\]
+
+\textbf{(b) Requirement:} \\
+Use one-sided Chebyshev inequality to bound $p$.
+
+\textbf{(c) Requirement:} \\
+Use Chernoff bound to bound $p$.
+
+\end{document}
